@@ -234,15 +234,15 @@ namespace OPSCAPI.Controllers
 
         //DELETE Methods//
         [HttpDelete("User")]
-        public string AddUser(TblUser user)
+        public string DeleteUser(string userId)
         {
-            return manager.AddUser(user);
+            return manager.DeleteUser(userId);
         }
 
         [HttpDelete("Day")]
-        public string AddDay(TblDay day)
+        public string DeleteDay(string userId, DateOnly date)
         {
-            return manager.AddDay(day);
+            return manager.DeleteDay(date, userId);
         }
 
         [HttpDelete("Workout")]

@@ -363,7 +363,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public 
+        public string
 
         //Delete
         public string DeleteWorkout(string workoutID)
