@@ -718,25 +718,43 @@ namespace OPSCAPI.Models
             }
         }
 
-        private void DeleteStrength(string exerciseID)
+        public string DeleteStrength(string exerciseID)
         {
-            var strength = context.TblStrengthExercises.Find(exerciseID);
-
-            if (strength != null)
+            try
             {
-                context.TblStrengthExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
-                context.SaveChanges();
+                var strength = context.TblStrengthExercises.Find(exerciseID);
+
+                if (strength != null)
+                {
+                    context.TblStrengthExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
+                    context.SaveChanges();
+                    return "Success";
+                    
+                }
+                return "Strength Exercise not found";
+
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
             }
+            
         }
 
-        private void DeleteCardio(string exerciseID)
+        public string DeleteCardio(string exerciseID)
         {
-            var cardio = context.TblCardioExercises.Find(exerciseID);
-
-            if (cardio != null)
+            try
             {
-                context.TblCardioExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
-                context.SaveChanges();
+                var cardio = context.TblCardioExercises.Find(exerciseID);
+
+                if (cardio != null)
+                {
+                    context.TblCardioExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
+                    context.SaveChanges();
+                }
+                return "Strength Exercise not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
             }
         }
 

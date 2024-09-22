@@ -246,45 +246,45 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpDelete("Workout")]
-        public string AddWorkout(TblWorkout workout)
+        public string DeleteWorkout(string workout)
         {
-            return manager.AddWorkout(workout);
+            return manager.DeleteWorkout(workout);
         }
 
         [HttpDelete("Meal")]
-        public string AddMeal(TblMeal meal)
+        public string DeleteMeal(string meal)
         {
-            return manager.AddMeal(meal);
+            return manager.DeleteMeal(meal);
         }
 
         [HttpDelete("Food")]
-        public string AddFood(TblFood food)
+        public string DeleteFood(string food)
         {
-            return manager.AddFood(food);
+            return manager.DeleteFood(food);
         }
 
         [HttpDelete("Exercise")]
-        public string AddExercise(TblExercise exercise)
+        public string DeleteExercise(string exercise)
         {
-            return manager.AddExercise(exercise);
+            return manager.DeleteExercise(exercise);
         }
 
         [HttpDelete("Cardio")]
-        public string AddCardio(TblCardioExercise cardio)
+        public string DeleteCardio(string cardio)
         {
-            return manager.AddCardio(cardio);
+            return manager.DeleteCardio(cardio);
         }
 
         [HttpDelete("Strength")]
-        public string AddStrength(TblStrengthExercise strength)
+        public string DeleteStrength(string strength)
         {
-            return manager.AddStrength(strength);
+            return manager.DeleteStrength(strength);
         }
 
         [HttpDelete("Movement")]
-        public string AddMovement(TblMovement movement)
+        public string DeleteMovement(string movement)
         {
-            return manager.AddMovement(movement);
+            return manager.DeleteMovement(movement);
         }
         //DELETE Methods//
     }
