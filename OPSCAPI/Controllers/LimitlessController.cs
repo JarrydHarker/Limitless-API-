@@ -180,55 +180,55 @@ namespace OPSCAPI.Controllers
         [HttpPut("User")]
         public string UpdateUser(TblUser user)
         {
-            return manager.AddUser(user);
+            return manager.UpdateUser(user);
         }
 
         [HttpPut("Day")]
         public string UpdateDay(TblDay day)
         {
-            return manager.AddDay(day);
+            return manager.UpdateDay(day);
         }
 
         [HttpPut("Workout")]
         public string UpdateWorkout(TblWorkout workout)
         {
-            return manager.AddWorkout(workout);
+            return manager.UpdateWorkout(workout);
         }
 
         [HttpPut("Meal")]
         public string UpdateMeal(TblMeal meal)
         {
-            return manager.AddMeal(meal);
+            return manager.UpdateMeal(meal);
         }
 
         [HttpPut("Food")]
         public string UpdateFood(TblFood food)
         {
-            return manager.AddFood(food);
+            return manager.UpdateFood(food);
         }
 
         [HttpPut("Exercise")]
         public string UpdateExercise(TblExercise exercise)
         {
-            return manager.AddExercise(exercise);
+            return manager.UpdateExercise(exercise);
         }
 
         [HttpPut("Cardio")]
         public string UpdateCardio(TblCardioExercise cardio)
         {
-            return manager.AddCardio(cardio);
+            return manager.UpdateCardio(cardio);
         }
 
         [HttpPut("Strength")]
         public string UpdateStrength(TblStrengthExercise strength)
         {
-            return manager.AddStrength(strength);
+            return manager.UpdateStrength(strength);
         }
 
         [HttpPut("Movement")]
         public string UpdateMovement(TblMovement movement)
         {
-            return manager.AddMovement(movement);
+            return manager.UpdateMovement(movement);
         }
         //PUT Methods//
 

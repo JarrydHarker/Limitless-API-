@@ -751,7 +751,7 @@ namespace OPSCAPI.Models
                     context.TblCardioExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
                     context.SaveChanges();
                 }
-                return "Strength Exercise not found";
+                return "Cardio Exercise not found";
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
