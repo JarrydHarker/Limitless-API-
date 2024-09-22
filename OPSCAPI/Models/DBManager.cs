@@ -640,7 +640,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        private void DeleteStrength(string exerciseID)
+        public void DeleteStrength(string exerciseID)
         {
             var strength = context.TblStrengthExercises.Find(exerciseID);
 
@@ -651,7 +651,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        private void DeleteCardio(string exerciseID)
+        public void DeleteCardio(string exerciseID)
         {
             var cardio = context.TblCardioExercises.Find(exerciseID);
 
@@ -972,7 +972,7 @@ namespace OPSCAPI.Models
         }
 
         //Delete
-        public string DeletMeal(string mealId)
+        public string DeleteMeal(string mealId)
         {
             try
             {
