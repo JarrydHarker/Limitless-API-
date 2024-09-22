@@ -255,7 +255,7 @@ namespace OPSCAPI.Models
                     return "Success";
                 }
 
-                return "User not found";
+                return "Day not found";
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
@@ -363,9 +363,27 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string
+        public string UpdateWorkout(TblWorkout workout)
+        {
+            try
+            {
+                var original = context.TblWorkouts.Where(x => x.UserId == workout.UserId).FirstOrDefault();
 
-        //Delete
+                if (original != null)
+                {
+                    original = workout;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Workout not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
+        //Delete  
         public string DeleteWorkout(string workoutID)
         {
             try
@@ -574,6 +592,26 @@ namespace OPSCAPI.Models
             } else return "Exercise not found";
         }
 
+        public string UpdateExercise(TblExercise exercise)
+        {
+            try
+            {
+                var original = context.TblExercises.Where(x => x.ExerciseId == exercise.ExerciseId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = exercise;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Exercise not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
         public string UpdateCardio(string exerciseID, int? time = null, float? distance = null)
         {
             var cardio = context.TblCardioExercises.Find(exerciseID);
@@ -594,6 +632,26 @@ namespace OPSCAPI.Models
             }
 
             return "Cardio not found";
+        }
+
+        public string UpdateCardio(TblCardioExercise cardio)
+        {
+            try
+            {
+                var original = context.TblCardioExercises.Where(x => x.ExerciseId == cardio.ExerciseId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = cardio;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Cardio not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
         }
 
         public string UpdateStrength(string exerciseID, int? sets = null, int? reps = null, bool? favourite = null)
@@ -621,6 +679,26 @@ namespace OPSCAPI.Models
             }
 
             return "Strength not found";
+        }
+
+        public string UpdateStrength(TblStrengthExercise strength)
+        {
+            try
+            {
+                var original = context.TblStrengthExercises.Where(x => x.ExerciseId == strength.ExerciseId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = strength;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Strength not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
         }
 
         //Delete
@@ -870,6 +948,26 @@ namespace OPSCAPI.Models
             return "Food not found";
         }
 
+        public string UpdateFood(TblFood food)
+        {
+            try
+            {
+                var original = context.TblFoods.Where(x => x.FoodId == food.FoodId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = food;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Food not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
         //Delete
         public string DeleteFood(string foodId)
         {
@@ -900,7 +998,7 @@ namespace OPSCAPI.Models
                 return $"Error: {ex}";
             }
         }
-
+         
         public string AddMeal(string mealId, string name, DateOnly? date = null, string? userId = null)
         {
             TblMeal meal = new TblMeal
@@ -971,8 +1069,28 @@ namespace OPSCAPI.Models
             return "Meal not found";
         }
 
+        public string UpdateMeal(TblMeal meal)
+        {
+            try
+            {
+                var original = context.TblMeals.Where(x => x.MealId == meal.MealId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = meal;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Meal not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
         //Delete
-        public string DeletMeal(string mealId)
+        public string DeleteMeal(string mealId)
         {
             try
             {
@@ -1089,6 +1207,25 @@ namespace OPSCAPI.Models
             return "Movement not found";
         }
 
+        public string UpdateMovement(TblMovement movement)
+        {
+            try
+            {
+                var original = context.TblMovements.Where(x => x.MovementId == movement.MovementId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = movement;
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "Movement not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
         //Delete
         public string DeleteMovement(string movementId)
         {
