@@ -24,6 +24,12 @@ namespace OPSCAPI.Controllers
             return manager.GetAllUsers();
         }
 
+        [HttpGet("UserInfo")]
+        public UserInfo? GetUserInfo(string userId)
+        {
+            return manager.GetUserInfo(userId);
+        }
+
         [HttpGet("Day")]
         public Day? GetDay(DateOnly date, string userId)
         {
@@ -140,6 +146,12 @@ namespace OPSCAPI.Controllers
             return manager.AddUser(user);
         }
 
+        [HttpPost("UserInfo")]
+        public string AddUserInfo(UserInfo user)
+        {
+            return manager.AddUserInfo(user);
+        }
+
         [HttpPost("Day")]
         public string AddDay(Day day)
         {
@@ -196,6 +208,12 @@ namespace OPSCAPI.Controllers
             return manager.UpdateUser(user);
         }
 
+        [HttpPut("UserInfo")]
+        public string UpdateUserInfo(UserInfo user)
+        {
+            return manager.UpdateUserInfo(user);
+        }
+
         [HttpPut("Day")]
         public string UpdateDay(Day day)
         {
@@ -250,6 +268,12 @@ namespace OPSCAPI.Controllers
         public string DeleteUser(string userId)
         {
             return manager.DeleteUser(userId);
+        }
+
+        [HttpDelete("UserInfo")]
+        public string DeleteUserInfo(string userId)
+        {
+            return manager.DeleteUserInfo(userId);
         }
 
         [HttpDelete("Day")]
