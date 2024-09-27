@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace OPSCAPI.Models;
+namespace OPSCAPI.Models.Database;
 
-public partial class LimitlessDbContext : DbContext
+public partial class LimitLessDbContext : DbContext
 {
-    public LimitlessDbContext()
+    public LimitLessDbContext()
     {
     }
 
-    public LimitlessDbContext(DbContextOptions<LimitlessDbContext> options)
+    public LimitLessDbContext(DbContextOptions<LimitLessDbContext> options)
         : base(options)
     {
     }
@@ -25,17 +25,23 @@ public partial class LimitlessDbContext : DbContext
 
     public virtual DbSet<TblMeal> TblMeals { get; set; }
 
+    public virtual DbSet<TblMealFood> TblMealFoods { get; set; }
+
     public virtual DbSet<TblMovement> TblMovements { get; set; }
+
+    public virtual DbSet<TblRatio> TblRatios { get; set; }
 
     public virtual DbSet<TblStrengthExercise> TblStrengthExercises { get; set; }
 
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
+    public virtual DbSet<TblUserInfo> TblUserInfos { get; set; }
+
     public virtual DbSet<TblWorkout> TblWorkouts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=LimitlessDB;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=LimitLessDb;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -114,20 +120,12 @@ public partial class LimitlessDbContext : DbContext
 
             entity.ToTable("tblFood");
 
-            entity.Property(e => e.FoodId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("FoodID");
+            entity.Property(e => e.FoodId).HasColumnName("FoodID");
             entity.Property(e => e.Category).HasMaxLength(250);
-            entity.Property(e => e.Description).HasMaxLength(250);
             entity.Property(e => e.MealId)
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("MealID");
-
-            entity.HasOne(d => d.Meal).WithMany(p => p.TblFoods)
-                .HasForeignKey(d => d.MealId)
-                .HasConstraintName("FK_tblFood_tblMeal");
         });
 
         modelBuilder.Entity<TblMeal>(entity =>
@@ -151,6 +149,29 @@ public partial class LimitlessDbContext : DbContext
                 .HasConstraintName("FK_tblMeal_tblDay1");
         });
 
+        modelBuilder.Entity<TblMealFood>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("tblMeal_Food");
+
+            entity.Property(e => e.FoodId).HasColumnName("FoodID");
+            entity.Property(e => e.MealId)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("MealID");
+
+            entity.HasOne(d => d.Food).WithMany()
+                .HasForeignKey(d => d.FoodId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tblMeal_Food_tblFood");
+
+            entity.HasOne(d => d.Meal).WithMany()
+                .HasForeignKey(d => d.MealId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tblMeal_Food_tblMeal");
+        });
+
         modelBuilder.Entity<TblMovement>(entity =>
         {
             entity.HasKey(e => e.MovementId);
@@ -167,6 +188,23 @@ public partial class LimitlessDbContext : DbContext
             entity.Property(e => e.Equipment).HasMaxLength(25);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Type).HasMaxLength(25);
+        });
+
+        modelBuilder.Entity<TblRatio>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK_tblRatios_1");
+
+            entity.ToTable("tblRatios");
+
+            entity.Property(e => e.UserId)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithOne(p => p.TblRatio)
+                .HasForeignKey<TblRatio>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tblRatios_tblUserInfo");
         });
 
         modelBuilder.Entity<TblStrengthExercise>(entity =>
@@ -195,6 +233,23 @@ public partial class LimitlessDbContext : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(255);
             entity.Property(e => e.Surname).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<TblUserInfo>(entity =>
+        {
+            entity.HasKey(e => e.UserId);
+
+            entity.ToTable("tblUserInfo");
+
+            entity.Property(e => e.UserId)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithOne(p => p.TblUserInfo)
+                .HasForeignKey<TblUserInfo>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tblUserInfo_tblUser");
         });
 
         modelBuilder.Entity<TblWorkout>(entity =>

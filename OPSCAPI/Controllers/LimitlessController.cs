@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OPSCAPI.Models;
+using OPSCAPI.Models.Database;
 
 namespace OPSCAPI.Controllers
 {
@@ -12,109 +13,109 @@ namespace OPSCAPI.Controllers
 
         //GET Methods//
         [HttpGet("User")]
-        public TblUser? GetUser(string userId) 
+        public User? GetUser(string userId) 
         {
             return manager.GetUser(userId);
         }
 
         [HttpGet("User/All")]
-        public List<TblUser>? GetAllUsers()
+        public List<User>? GetAllUsers()
         {
             return manager.GetAllUsers();
         }
 
         [HttpGet("Day")]
-        public TblDay? GetDay(DateOnly date, string userId)
+        public Day? GetDay(DateOnly date, string userId)
         {
             return manager.GetDay(date,userId);
         }
 
         [HttpGet("Day/All")]
-        public List<TblDay>? GetAllDays()
+        public List<Day>? GetAllDays()
         {
             return manager.GetAllDays();
         }
 
         [HttpGet("Exercise")]
-        public TblExercise? GetExercise(string exerciseId)
+        public Exercise? GetExercise(string exerciseId)
         {
             return manager.GetExercise(exerciseId);
         }
 
         [HttpGet("Exercise/All")]
-        public List<TblExercise>? GetAllExercises()
+        public List<Exercise>? GetAllExercises()
         {
             return manager.GetAllExercises();
         }
 
         [HttpGet("Cardio")]
-        public TblCardioExercise? GetCardio(string exerciseId)
+        public Cardio? GetCardio(string exerciseId)
         {
             return manager.GetCardio(exerciseId);
         }
 
         [HttpGet("Cardio/All")]
-        public List<TblCardioExercise>? GetAllCardio()
+        public List<Cardio>? GetAllCardio()
         {
             return manager.GetAllCardio();
         }
 
         [HttpGet("Strength")]
-        public TblStrengthExercise? GetStrength(string exerciseId)
+        public Strength? GetStrength(string exerciseId)
         {
             return manager.GetStrength(exerciseId);
         }
 
         [HttpGet("Strength/All")]
-        public List<TblStrengthExercise>? GetAllStrength()
+        public List<Strength>? GetAllStrength()
         {
             return manager.GetAllStrength();
         }
 
         [HttpGet("Meal")]
-        public TblMeal? GetMeal(string mealId)
+        public Meal? GetMeal(string mealId)
         {
             return manager.GetMeal(mealId);
         }
 
         [HttpGet("Meal/All")]
-        public List<TblMeal>? GetAllMeals(string mealId)
+        public List<Meal>? GetAllMeals(string mealId)
         {
             return manager.GetAllMeals();
         }
 
         [HttpGet("Food")]
-        public TblFood? GetFood(string foodId)
+        public Food? GetFood(int foodId)
         {
             return manager.GetFood(foodId);
         }
 
         [HttpGet("Food/All")]
-        public List<TblFood>? GetAllFoods()
+        public async Task<List<Food>> GetAllFoods(int pageNumber, int pageSize)
         {
-            return manager.GetAllFoods();
+            return await manager.GetAllFoods(pageNumber, pageSize);
         }
 
         [HttpGet("Movement")]
-        public TblMovement? GetMovement(string movementId)
+        public Movement? GetMovement(string movementId)
         {
             return manager.GetMovement(movementId);
         }
 
         [HttpGet("Movement/All")]
-        public List<TblMovement>? GetAllMovements()
+        public List<Movement>? GetAllMovements()
         {
             return manager.GetAllMovements();
         }
 
         [HttpGet("Workout")]
-        public TblWorkout? GetWorkout(string workoutId)
+        public Workout? GetWorkout(string workoutId)
         {
             return manager.GetWorkout(workoutId);
         }
 
         [HttpGet("Workout/All")]
-        public List<TblWorkout>? GetAllWorkouts()
+        public List<Workout>? GetAllWorkouts()
         {
             return manager.GetAllWorkouts();
         }
@@ -122,55 +123,55 @@ namespace OPSCAPI.Controllers
 
         //POST Methods//
         [HttpPost("User")]
-        public string AddUser(TblUser user)
+        public string AddUser(User user)
         {
             return manager.AddUser(user);
         }
 
         [HttpPost("Day")]
-        public string AddDay(TblDay day)
+        public string AddDay(Day day)
         {
             return manager.AddDay(day);
         }
 
         [HttpPost("Workout")]
-        public string AddWorkout(TblWorkout workout)
+        public string AddWorkout(Workout workout)
         {
             return manager.AddWorkout(workout);
         }
 
         [HttpPost("Meal")]
-        public string AddMeal(TblMeal meal)
+        public string AddMeal(Meal meal)
         {
             return manager.AddMeal(meal);
         }
 
         [HttpPost("Food")]
-        public string AddFood(TblFood food)
+        public string AddFood(Food food)
         {
             return manager.AddFood(food);
         }
 
         [HttpPost("Exercise")]
-        public string AddExercise(TblExercise exercise)
+        public string AddExercise(Exercise exercise)
         {
             return manager.AddExercise(exercise);
         }
 
         [HttpPost("Cardio")]
-        public string AddCardio(TblCardioExercise cardio)
+        public string AddCardio(Cardio cardio)
         {
             return manager.AddCardio(cardio);
         }
 
         [HttpPost("Strength")]
-        public string AddStrength(TblStrengthExercise strength)
+        public string AddStrength(Strength strength)
         {
             return manager.AddStrength(strength);
         }
 
         [HttpPost("Movement")]
-        public string AddMovement(TblMovement movement)
+        public string AddMovement(Movement movement)
         {
             return manager.AddMovement(movement);
         }
@@ -178,55 +179,55 @@ namespace OPSCAPI.Controllers
 
         //PUT Methods//
         [HttpPut("User")]
-        public string UpdateUser(TblUser user)
+        public string UpdateUser(User user)
         {
             return manager.UpdateUser(user);
         }
 
         [HttpPut("Day")]
-        public string UpdateDay(TblDay day)
+        public string UpdateDay(Day day)
         {
             return manager.UpdateDay(day);
         }
 
         [HttpPut("Workout")]
-        public string UpdateWorkout(TblWorkout workout)
+        public string UpdateWorkout(Workout workout)
         {
             return manager.UpdateWorkout(workout);
         }
 
         [HttpPut("Meal")]
-        public string UpdateMeal(TblMeal meal)
+        public string UpdateMeal(Meal meal)
         {
             return manager.UpdateMeal(meal);
         }
 
         [HttpPut("Food")]
-        public string UpdateFood(TblFood food)
+        public string UpdateFood(Food food)
         {
             return manager.UpdateFood(food);
         }
 
         [HttpPut("Exercise")]
-        public string UpdateExercise(TblExercise exercise)
+        public string UpdateExercise(Exercise exercise)
         {
             return manager.UpdateExercise(exercise);
         }
 
         [HttpPut("Cardio")]
-        public string UpdateCardio(TblCardioExercise cardio)
+        public string UpdateCardio(Cardio cardio)
         {
             return manager.UpdateCardio(cardio);
         }
 
         [HttpPut("Strength")]
-        public string UpdateStrength(TblStrengthExercise strength)
+        public string UpdateStrength(Strength strength)
         {
             return manager.UpdateStrength(strength);
         }
 
         [HttpPut("Movement")]
-        public string UpdateMovement(TblMovement movement)
+        public string UpdateMovement(Movement movement)
         {
             return manager.UpdateMovement(movement);
         }
@@ -240,7 +241,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpDelete("Day")]
-        public string DeleteDay(string userId, DateOnly date)
+        public string DeleteDay(DateOnly date, string userId)
         {
             return manager.DeleteDay(date, userId);
         }
@@ -258,7 +259,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpDelete("Food")]
-        public string DeleteFood(string food)
+        public string DeleteFood(int food)
         {
             return manager.DeleteFood(food);
         }

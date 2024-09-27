@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OPSCAPI.Models;
+namespace OPSCAPI.Models.Database;
 
 public partial class TblUser
 {
@@ -15,11 +15,7 @@ public partial class TblUser
 
     public string Password { get; set; } = null!;
 
-    public double? WeightGoal { get; set; }
-
-    public double? CalorieWallet { get; set; }
-
-    public int StepGoal { get; set; }
-
     public virtual ICollection<TblDay> TblDays { get; set; } = new List<TblDay>();
+
+    public virtual TblUserInfo? TblUserInfo { get; set; }
 }
