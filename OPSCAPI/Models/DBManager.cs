@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OPSCAPI.Models.Database;
 using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -7,7 +8,7 @@ namespace OPSCAPI.Models
 {
     public class DBManager
     {
-        LimitLessDbContext context = new LimitLessDbContext();
+        LimitlessDbContext context = new LimitlessDbContext();
 
         //User
         //Create
@@ -964,6 +965,25 @@ namespace OPSCAPI.Models
             return foods;
         }
 
+        public async Task<List<Food>> SearchForFoods(string strSearch)
+        {
+            var foods = new List<Food>();
+
+            // Pagination logic: Skip the first (pageNumber - 1) * pageSize items and take pageSize items
+            var paginatedFoods = await context.TblFoods
+                .Where(x => x.Description != null && x.Description!.ToLower().Contains(strSearch.ToLower()))
+                .Take(10)
+                .ToListAsync();
+
+            // Convert the entities to Movement objects
+            foreach (var food in paginatedFoods)
+            {
+                foods.Add(new Food(food));
+            }
+
+            return foods;
+        }
+
         //Update
         public string UpdateFood(int foodId, string? category = null, string? description = null, int? calories = null, string? mealID = null, float? weight = null, float? protein = null, float? carbs = null, float? fibre = null, float? fat = null, float? cholestrol = null, float? sugar = null, float? satFat = null, float? vitB12 = null, float? vitB6 = null, float? vitK = null, float? vitE = null, float? vitC = null, float? vitA = null, float? zinc = null, float? magnesium = null, float? sodium = null, float? potassium = null, float? iron = null, float? calcium = null)
         {
@@ -1300,7 +1320,6 @@ namespace OPSCAPI.Models
             };
 
             movement.Description = description != null ? description : null;
-            movement.Max = max != null ? max : null;
 
             try
             {
@@ -1315,18 +1334,6 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<Movement>? GetAllMovements()
-        {
-            var moves = new List<Movement>();
-
-            foreach(TblMovement move in context.TblMovements.ToList())
-            {
-                moves.Add(new Movement(move));
-            }
-
-            return moves;
-        }
-
         public Movement? GetMovement(int movementId)
         {
             var move = context.TblMovements.Find(movementId);
@@ -1337,6 +1344,44 @@ namespace OPSCAPI.Models
             }
 
             return null;
+        }
+
+        public async Task<List<Movement>> GetAllMovements(int pageNumber, int pageSize)
+        {
+            var moves = new List<Movement>();
+
+            // Pagination logic: Skip the first (pageNumber - 1) * pageSize items and take pageSize items
+            var paginatedMoves = await context.TblMovements
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            // Convert the entities to Movement objects
+            foreach (var move in paginatedMoves)
+            {
+                moves.Add(new Movement(move));
+            }
+
+            return moves;
+        }
+
+        public async Task<List<Movement>> SearchForMovements(string strSearch)
+        {
+            var moves = new List<Movement>();
+
+            // Pagination logic: Skip the first (pageNumber - 1) * pageSize items and take pageSize items
+            var paginatedMoves = await context.TblMovements
+                .Where(x => x.Name.ToLower().Contains(strSearch.ToLower()))
+                .Take(10)
+                .ToListAsync();
+
+            // Convert the entities to Movement objects
+            foreach (var move in paginatedMoves)
+            {
+                moves.Add(new Movement(move));
+            }
+
+            return moves;
         }
 
         //Update
@@ -1374,11 +1419,6 @@ namespace OPSCAPI.Models
                 if (description != null)
                 {
                     movement.Description = description;
-                }
-
-                if (max != null)
-                {
-                    movement.Max = max;
                 }
 
                 context.SaveChanges();

@@ -366,8 +366,6 @@ namespace OPSCAPI.Models
 
         public string DifficultyLevel { get; set; } = null!;
 
-        public double? Max { get; set; }
-
         public Movement(TblMovement movement) 
         {
             MovementId = movement.MovementId;
@@ -377,12 +375,11 @@ namespace OPSCAPI.Models
             Bodypart = movement.Bodypart;
             Equipment = movement.Equipment;
             DifficultyLevel = movement.DifficultyLevel;
-            Max = movement.Max;
         }
 
         public TblMovement ConvertToEntity()
         {
-            return new TblMovement { MovementId = MovementId, Description = Description, Name = Name, Type = Type, Bodypart = Bodypart, Equipment = Equipment, DifficultyLevel = DifficultyLevel, Max = Max };
+            return new TblMovement { MovementId = MovementId, Description = Description, Name = Name, Type = Type, Bodypart = Bodypart, Equipment = Equipment, DifficultyLevel = DifficultyLevel};
         }
     }
 }

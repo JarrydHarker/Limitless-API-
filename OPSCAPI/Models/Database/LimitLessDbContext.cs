@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OPSCAPI.Models.Database;
 
-public partial class LimitLessDbContext : DbContext
+public partial class LimitlessDbContext : DbContext
 {
-    public LimitLessDbContext()
+    public LimitlessDbContext()
     {
     }
 
-    public LimitLessDbContext(DbContextOptions<LimitLessDbContext> options)
+    public LimitlessDbContext(DbContextOptions<LimitlessDbContext> options)
         : base(options)
     {
     }
@@ -41,7 +41,7 @@ public partial class LimitLessDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=LimitLessDb;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=LimitlessDb;Trusted_Connection=True;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -177,8 +177,7 @@ public partial class LimitLessDbContext : DbContext
 
             entity.Property(e => e.MovementId).HasColumnName("MovementID");
             entity.Property(e => e.Bodypart).HasMaxLength(20);
-            entity.Property(e => e.Description).HasMaxLength(250);
-            entity.Property(e => e.DifficultyLevel).HasMaxLength(15);
+            entity.Property(e => e.DifficultyLevel).HasMaxLength(25);
             entity.Property(e => e.Equipment).HasMaxLength(25);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Type).HasMaxLength(25);
