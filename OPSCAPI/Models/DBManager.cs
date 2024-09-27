@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OPSCAPI.Models.Database;
-using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OPSCAPI.Models
 {
@@ -136,6 +133,71 @@ namespace OPSCAPI.Models
             try
             {
                 context.TblUsers.Where(x => x.UserId == userID).ExecuteDelete();
+                context.SaveChanges();
+
+                return "Success";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
+        //UserInfo
+        //Create
+        public string AddUserInfo(UserInfo user)
+        {
+            try
+            {
+                context.TblUserInfos.Add(user.ConvertToEntity());
+                context.SaveChanges();
+
+                return "Success";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
+        //Read
+        public UserInfo? GetUserInfo(string userID)
+        {
+            var user = context.TblUserInfos.Find(userID);
+
+            if (user != null)
+            {
+                return new UserInfo(user);
+            }
+
+            return null;
+        }
+
+        //Update
+        public string UpdateUserInfo(UserInfo user)
+        {
+            try
+            {
+                var original = context.TblUserInfos.Where(x => x.UserId == user.UserId).FirstOrDefault();
+
+                if (original != null)
+                {
+                    original = user.ConvertToEntity();
+                    context.SaveChanges();
+                    return "Success";
+                }
+
+                return "User not found";
+            } catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
+        //Delete
+        public string DeleteUserInfo(string userID)
+        {
+            try
+            {
+                context.TblUserInfos.Where(x => x.UserId == userID).ExecuteDelete();
                 context.SaveChanges();
 
                 return "Success";
@@ -933,7 +995,7 @@ namespace OPSCAPI.Models
 
             var foods = new List<Food>();
 
-            foreach(TblFood food in tblfoods)
+            foreach (TblFood food in tblfoods)
             {
                 foods.Add(new Food(food));
             }
@@ -945,7 +1007,7 @@ namespace OPSCAPI.Models
         {
             var food = context.TblFoods.Find(foodId);
 
-            if(food != null)
+            if (food != null)
             {
                 return new Food(food);
             }
@@ -957,7 +1019,7 @@ namespace OPSCAPI.Models
         {
             var foods = new List<Food>();
 
-            foreach(TblFood food in context.TblFoods.Where(x => x.MealId == mealId).ToList())
+            foreach (TblFood food in context.TblFoods.Where(x => x.MealId == mealId).ToList())
             {
                 foods.Add(new Food(food));
             }
@@ -1194,7 +1256,7 @@ namespace OPSCAPI.Models
         {
             var meals = new List<Meal>();
 
-            foreach(TblMeal meal in context.TblMeals.ToList())
+            foreach (TblMeal meal in context.TblMeals.ToList())
             {
                 meals.Add(new Meal(meal));
             }
@@ -1218,7 +1280,7 @@ namespace OPSCAPI.Models
         {
             var meals = new List<Meal>();
 
-            foreach(TblMeal meal in context.TblMeals.Where(x => x.UserId == userId).ToList())
+            foreach (TblMeal meal in context.TblMeals.Where(x => x.UserId == userId).ToList())
             {
                 meals.Add(new Meal(meal));
             }
@@ -1338,7 +1400,7 @@ namespace OPSCAPI.Models
         {
             var move = context.TblMovements.Find(movementId);
 
-            if(move != null)
+            if (move != null)
             {
                 return new Movement(move);
             }
