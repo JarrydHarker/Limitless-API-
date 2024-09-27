@@ -96,6 +96,12 @@ namespace OPSCAPI.Controllers
             return await manager.GetAllFoods(pageNumber, pageSize);
         }
 
+        [HttpGet("Food/Search")]
+        public async Task<List<Food>> SearchForFoods(string strSearch)
+        {
+            return await manager.SearchForFoods(strSearch);
+        }
+
         [HttpGet("Movement")]
         public Movement? GetMovement(int movementId)
         {
@@ -103,9 +109,15 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Movement/All")]
-        public List<Movement>? GetAllMovements()
+        public async Task<List<Movement>> GetAllMovements(int pageNumber = 1, int pageSize = 100)
         {
-            return manager.GetAllMovements();
+            return await manager.GetAllMovements(pageNumber, pageSize);
+        }
+
+        [HttpGet("Movement/Search")]
+        public async Task<List<Movement>> SearchForMovements(string strSearch)
+        {
+            return await manager.SearchForMovements(strSearch);
         }
 
         [HttpGet("Workout")]
