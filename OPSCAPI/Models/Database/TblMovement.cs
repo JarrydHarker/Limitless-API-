@@ -5,7 +5,7 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblMovement
 {
-    public string MovementId { get; set; } = null!;
+    public int MovementId { get; set; }
 
     public string Name { get; set; } = null!;
 

@@ -9,7 +9,7 @@ public partial class TblExercise
 
     public string WorkoutId { get; set; } = null!;
 
-    public string MovementId { get; set; } = null!;
+    public int MovementId { get; set; }
 
     public virtual TblCardioExercise Exercise { get; set; } = null!;
 
