@@ -97,7 +97,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Movement")]
-        public Movement? GetMovement(string movementId)
+        public Movement? GetMovement(int movementId)
         {
             return manager.GetMovement(movementId);
         }
@@ -283,9 +283,9 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpDelete("Movement")]
-        public string DeleteMovement(string movement)
+        public string DeleteMovement(int movementId)
         {
-            return manager.DeleteMovement(movement);
+            return manager.DeleteMovement(movementId);
         }
         //DELETE Methods//
     }

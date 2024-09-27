@@ -119,7 +119,7 @@ namespace OPSCAPI.Models
         }
     }
 
-    public class Steps
+    /*public class Steps
     {
         public string UserId { get; set; } = null!;
 
@@ -131,7 +131,7 @@ namespace OPSCAPI.Models
         {
             return new TblStep { UserId = UserId, Date = Date, Amount = Amount };
         }
-    }
+    }*/
 
     public class Workout
     {
@@ -160,7 +160,7 @@ namespace OPSCAPI.Models
 
         public string WorkoutId { get; set; } = null!;
 
-        public string MovementId { get; set; } = null!;
+        public int MovementId { get; set; } = 0;
 
         public Exercise(TblExercise exercise)
         {
@@ -352,7 +352,7 @@ namespace OPSCAPI.Models
 
     public class Movement
     {
-        public string MovementId { get; set; } = null!;
+        public int MovementId { get; set; } = 0;
 
         public string Name { get; set; } = null!;
 

@@ -7,7 +7,7 @@ namespace OPSCAPI.Models
 {
     public class DBManager
     {
-        LimitlessDbContext context = new LimitlessDbContext();
+        LimitLessDbContext context = new LimitLessDbContext();
 
         //User
         //Create
@@ -461,7 +461,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddExercise(string exerciseID, string workoutID, string movementID, int sets, int reps, bool favourite)
+        public string AddExercise(string exerciseID, string workoutID, int movementID, int sets, int reps, bool favourite)
         {
             try
             {
@@ -483,7 +483,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddExercise(string exerciseID, string workoutID, string movementID, int time, float distance)
+        public string AddExercise(string exerciseID, string workoutID, int movementID, int time, float distance)
         {
             try
             {
@@ -626,7 +626,7 @@ namespace OPSCAPI.Models
             return exercises;
         }
 
-        public List<Exercise>? GetExercisesByMovementId(string movementId)
+        public List<Exercise>? GetExercisesByMovementId(int movementId)
         {
             var exercises = new List<Exercise>();
 
@@ -675,7 +675,7 @@ namespace OPSCAPI.Models
         }
 
         //Update
-        public string UpdateExercise(string exerciseID, string? workoutID = null, string? movementID = null)
+        public string UpdateExercise(string exerciseID, string? workoutID = null, int? movementID = null)
         {
             var exercise = context.TblExercises.Find(exerciseID);
 
@@ -688,7 +688,7 @@ namespace OPSCAPI.Models
 
                 if (movementID != null)
                 {
-                    exercise.MovementId = movementID;
+                    exercise.MovementId = (int)movementID;
                 }
 
                 return "Success";
@@ -1287,7 +1287,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddMovement(string movementId, string name, string type, string bodyPart, string equipment, string difficulty, string? description = null, float? max = null)
+        public string AddMovement(int movementId, string name, string type, string bodyPart, string equipment, string difficulty, string? description = null, float? max = null)
         {
             TblMovement movement = new TblMovement
             {
@@ -1327,7 +1327,7 @@ namespace OPSCAPI.Models
             return moves;
         }
 
-        public Movement? GetMovement(string movementId)
+        public Movement? GetMovement(int movementId)
         {
             var move = context.TblMovements.Find(movementId);
 
@@ -1340,7 +1340,7 @@ namespace OPSCAPI.Models
         }
 
         //Update
-        public string UpdateMovement(string movementId, string? name = null, string? type = null, string? bodyPart = null, string? equipment = null, string? difficulty = null, string? description = null, float? max = null)
+        public string UpdateMovement(int movementId, string? name = null, string? type = null, string? bodyPart = null, string? equipment = null, string? difficulty = null, string? description = null, float? max = null)
         {
             var movement = GetMovement(movementId);
 
@@ -1408,7 +1408,7 @@ namespace OPSCAPI.Models
             }
         }
         //Delete
-        public string DeleteMovement(string movementId)
+        public string DeleteMovement(int movementId)
         {
             try
             {

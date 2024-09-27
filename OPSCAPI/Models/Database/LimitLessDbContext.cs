@@ -84,10 +84,7 @@ public partial class LimitLessDbContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("ExerciseID");
-            entity.Property(e => e.MovementId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MovementID");
+            entity.Property(e => e.MovementId).HasColumnName("MovementID");
             entity.Property(e => e.WorkoutId)
                 .HasMaxLength(10)
                 .IsFixedLength()
@@ -178,10 +175,7 @@ public partial class LimitLessDbContext : DbContext
 
             entity.ToTable("tblMovement");
 
-            entity.Property(e => e.MovementId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MovementID");
+            entity.Property(e => e.MovementId).HasColumnName("MovementID");
             entity.Property(e => e.Bodypart).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(250);
             entity.Property(e => e.DifficultyLevel).HasMaxLength(15);
