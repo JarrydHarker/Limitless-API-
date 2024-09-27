@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OPSCAPI.Models.Database;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OPSCAPI.Models
 {
@@ -9,11 +11,11 @@ namespace OPSCAPI.Models
 
         //User
         //Create
-        public string AddUser(TblUser user)
+        public string AddUser(User user)
         {
             try
             {
-                context.TblUsers.Add(user);
+                context.TblUsers.Add(user.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -23,7 +25,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddUser(string userID, string name, string surname, string email, string password, float? weightGoal = null, float? calorieWallet = null, int stepGoal = 0)
+        public string AddUser(string userID, string name, string surname, string email, string password, float? weightGoal = null, float? calorieWallet = null, int stepGoal = 10000)
         {
             TblUser user = new TblUser
             {
@@ -32,9 +34,6 @@ namespace OPSCAPI.Models
                 Surname = surname,
                 Email = email,
                 Password = password,
-                WeightGoal = weightGoal,
-                CalorieWallet = calorieWallet,
-                StepGoal = stepGoal,
             };
 
             try
@@ -50,14 +49,28 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblUser>? GetAllUsers()
+        public List<User>? GetAllUsers()
         {
-            return context.TblUsers.ToList();
+            List<User> users = new List<User>();
+
+            foreach (TblUser user in context.TblUsers.ToList())
+            {
+                users.Add(new User(user));
+            }
+
+            return users;
         }
 
-        public TblUser? GetUser(string userID)
+        public User? GetUser(string userID)
         {
-            return context.TblUsers.Find(userID);
+            var user = context.TblUsers.Find(userID);
+
+            if (user != null)
+            {
+                return new User(user);
+            }
+
+            return null;
         }
 
         //Update
@@ -88,21 +101,6 @@ namespace OPSCAPI.Models
                     user.Password = password;
                 }
 
-                if (weightGoal != null)
-                {
-                    user.WeightGoal = weightGoal;
-                }
-
-                if (calorieWallet != null)
-                {
-                    user.CalorieWallet = calorieWallet;
-                }
-
-                if (stepGoal != null)
-                {
-                    user.StepGoal = (int)stepGoal;
-                }
-
                 context.SaveChanges();
                 return "Success";
 
@@ -111,7 +109,7 @@ namespace OPSCAPI.Models
             return "User not found";
         }
 
-        public string UpdateUser(TblUser user)
+        public string UpdateUser(User user)
         {
             try
             {
@@ -119,7 +117,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = user;
+                    original = user.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -148,11 +146,11 @@ namespace OPSCAPI.Models
 
         //Day
         //Create
-        public string AddDay(TblDay day)
+        public string AddDay(Day day)
         {
             try
             {
-                context.TblDays.Add(day);
+                context.TblDays.Add(day.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -188,19 +186,40 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblDay>? GetAllDays()
+        public List<Day>? GetAllDays()
         {
-            return context.TblDays.ToList();
+            List<Day> days = new List<Day>();
+
+            foreach (TblDay day in context.TblDays.ToList())
+            {
+                days.Add(new Day(day));
+            }
+
+            return days;
         }
 
-        public TblDay? GetDay(DateOnly date, string userID)
+        public Day? GetDay(DateOnly date, string userID)
         {
-            return context.TblDays.Find(userID, date);
+            var day = context.TblDays.Find(date, userID);
+
+            if (day != null)
+            {
+                return new Day(day);
+            }
+
+            return null;
         }
 
-        public List<TblDay>? GetDaysByUID(string userId)
+        public List<Day>? GetDaysByUID(string userId)
         {
-            return context.TblDays.Where(x => x.UserId == userId).ToList();
+            var days = new List<Day>();
+
+            foreach (TblDay day in context.TblDays.Where(x => x.UserId == userId).ToList())
+            {
+                days.Add(new Day(day));
+            }
+
+            return days;
         }
 
         //Update
@@ -242,7 +261,7 @@ namespace OPSCAPI.Models
             return "Day not found";
         }
 
-        public string UpdateDay(TblDay day)
+        public string UpdateDay(Day day)
         {
             try
             {
@@ -250,7 +269,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = day;
+                    original = day.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -279,11 +298,11 @@ namespace OPSCAPI.Models
 
         //Workout
         //Create
-        public string AddWorkout(TblWorkout workout)
+        public string AddWorkout(Workout workout)
         {
             try
             {
-                context.TblWorkouts.Add(workout);
+                context.TblWorkouts.Add(workout.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -316,24 +335,52 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblWorkout>? GetAllWorkouts()
+        public List<Workout>? GetAllWorkouts()
         {
-            return context.TblWorkouts.ToList();
+            var workouts = new List<Workout>();
+
+            foreach (TblWorkout workout in context.TblWorkouts.ToList())
+            {
+                workouts.Add(new Workout(workout));
+            }
+
+            return workouts;
         }
 
-        public List<TblWorkout>? GetWorkoutsByDate(DateOnly date)
+        public List<Workout>? GetWorkoutsByDate(DateOnly date)
         {
-            return context.TblWorkouts.Where(x => x.Date == date).ToList();
+            var workouts = new List<Workout>();
+
+            foreach (TblWorkout workout in context.TblWorkouts.Where(x => x.Date == date).ToList())
+            {
+                workouts.Add(new Workout(workout));
+            }
+
+            return workouts;
         }
 
-        public List<TblWorkout>? GetWorkoutsByUID(string userId)
+        public List<Workout>? GetWorkoutsByUID(string userId)
         {
-            return context.TblWorkouts.Where(x => x.UserId == userId).ToList();
+            var workouts = new List<Workout>();
+
+            foreach (TblWorkout workout in context.TblWorkouts.Where(x => x.UserId == userId).ToList())
+            {
+                workouts.Add(new Workout(workout));
+            }
+
+            return workouts;
         }
 
-        public TblWorkout? GetWorkout(string workoutID)
+        public Workout? GetWorkout(string workoutID)
         {
-            return context.TblWorkouts.Find(workoutID);
+            var workout = context.TblWorkouts.Find(workoutID);
+
+            if (workout != null)
+            {
+                return new Workout(workout);
+            }
+
+            return null;
         }
 
         //Update
@@ -363,7 +410,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string UpdateWorkout(TblWorkout workout)
+        public string UpdateWorkout(Workout workout)
         {
             try
             {
@@ -371,7 +418,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = workout;
+                    original = workout.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -398,13 +445,13 @@ namespace OPSCAPI.Models
             }
         }
 
-        //Exercise
+        //Cardio
         //Create
-        public string AddExercise(TblExercise exercise)
+        public string AddExercise(Exercise exercise)
         {
             try
             {
-                context.TblExercises.Add(exercise);
+                context.TblExercises.Add(exercise.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -458,11 +505,11 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddCardio(TblCardioExercise cardio)
+        public string AddCardio(Cardio cardio)
         {
             try
             {
-                context.TblCardioExercises.Add(cardio);
+                context.TblCardioExercises.Add(cardio.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -494,11 +541,11 @@ namespace OPSCAPI.Models
 
         }
 
-        public string AddStrength(TblStrengthExercise strength)
+        public string AddStrength(Strength strength)
         {
             try
             {
-                context.TblStrengthExercises.Add(strength);
+                context.TblStrengthExercises.Add(strength.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -531,44 +578,100 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblExercise>? GetAllExercises()
+        public List<Exercise>? GetAllExercises()
         {
-            return context.TblExercises.ToList();
+            var exercises = new List<Exercise>();
+
+            foreach (TblExercise exercise in context.TblExercises.ToList())
+            {
+                exercises.Add(new Exercise(exercise));
+            }
+
+            return exercises;
         }
 
-        public List<TblCardioExercise>? GetAllCardio()
+        public List<Cardio>? GetAllCardio()
         {
-            return context.TblCardioExercises.ToList();
+            var cardios = new List<Cardio>();
+
+            foreach (TblCardioExercise cardio in context.TblCardioExercises.ToList())
+            {
+                cardios.Add(new Cardio(cardio));
+            }
+
+            return cardios;
         }
 
-        public List<TblStrengthExercise>? GetAllStrength()
+        public List<Strength>? GetAllStrength()
         {
-            return context.TblStrengthExercises.ToList();
+            var strengths = new List<Strength>();
+
+            foreach (TblStrengthExercise strength in context.TblStrengthExercises.ToList())
+            {
+                strengths.Add(new Strength(strength));
+            }
+
+            return strengths;
         }
 
-        public List<TblExercise>? GetExercisesByWorkoutId(string workoutId)
+        public List<Exercise>? GetExercisesByWorkoutId(string workoutId)
         {
-            return context.TblExercises.Where(x => x.WorkoutId == workoutId).ToList();
+            var exercises = new List<Exercise>();
+
+            foreach (TblExercise exercise in context.TblExercises.Where(x => x.WorkoutId == workoutId).ToList())
+            {
+                exercises.Add(new Exercise(exercise));
+            }
+
+            return exercises;
         }
 
-        public List<TblExercise>? GetExercisesByMovementId(string movementId)
+        public List<Exercise>? GetExercisesByMovementId(string movementId)
         {
-            return context.TblExercises.Where(x => x.MovementId == movementId).ToList();
+            var exercises = new List<Exercise>();
+
+            foreach (TblExercise exercise in context.TblExercises.Where(x => x.MovementId == movementId).ToList())
+            {
+                exercises.Add(new Exercise(exercise));
+            }
+
+            return exercises;
         }
 
-        public TblExercise? GetExercise(string exerciseID)
+        public Exercise? GetExercise(string exerciseID)
         {
-            return context.TblExercises.Find(exerciseID);
+            var exercise = context.TblExercises.Find(exerciseID);
+
+            if (exercise != null)
+            {
+                return new Exercise(exercise);
+            }
+
+            return null;
         }
 
-        public TblStrengthExercise? GetStrength(string exerciseID)
+        public Strength? GetStrength(string exerciseID)
         {
-            return context.TblStrengthExercises.Find(exerciseID);
+            var strength = context.TblStrengthExercises.Find(exerciseID);
+
+            if (strength != null)
+            {
+                return new Strength(strength);
+            }
+
+            return null;
         }
 
-        public TblCardioExercise? GetCardio(string exerciseID)
+        public Cardio? GetCardio(string exerciseID)
         {
-            return context.TblCardioExercises.Find(exerciseID);
+            var cardio = context.TblCardioExercises.Find(exerciseID);
+
+            if (cardio != null)
+            {
+                return new Cardio(cardio);
+            }
+
+            return null;
         }
 
         //Update
@@ -589,10 +692,10 @@ namespace OPSCAPI.Models
                 }
 
                 return "Success";
-            } else return "Exercise not found";
+            } else return "Cardio not found";
         }
 
-        public string UpdateExercise(TblExercise exercise)
+        public string UpdateExercise(Exercise exercise)
         {
             try
             {
@@ -600,12 +703,12 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = exercise;
+                    original = exercise.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
 
-                return "Exercise not found";
+                return "Cardio not found";
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
@@ -634,7 +737,7 @@ namespace OPSCAPI.Models
             return "Cardio not found";
         }
 
-        public string UpdateCardio(TblCardioExercise cardio)
+        public string UpdateCardio(Cardio cardio)
         {
             try
             {
@@ -642,7 +745,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = cardio;
+                    original = cardio.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -681,7 +784,7 @@ namespace OPSCAPI.Models
             return "Strength not found";
         }
 
-        public string UpdateStrength(TblStrengthExercise strength)
+        public string UpdateStrength(Strength strength)
         {
             try
             {
@@ -689,7 +792,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = strength;
+                    original = strength.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -729,15 +832,15 @@ namespace OPSCAPI.Models
                     context.TblStrengthExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
                     context.SaveChanges();
                     return "Success";
-                    
+
                 }
-                return "Strength Exercise not found";
+                return "Strength Cardio not found";
 
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
             }
-            
+
         }
 
         public string DeleteCardio(string exerciseID)
@@ -751,7 +854,7 @@ namespace OPSCAPI.Models
                     context.TblCardioExercises.Where(x => x.ExerciseId == exerciseID).ExecuteDelete();
                     context.SaveChanges();
                 }
-                return "Cardio Exercise not found";
+                return "Cardio Cardio not found";
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
@@ -760,11 +863,11 @@ namespace OPSCAPI.Models
 
         //Food
         //Create
-        public string AddFood(TblFood food)
+        public string AddFood(Food food)
         {
             try
             {
-                context.TblFoods.Add(food);
+                context.TblFoods.Add(food.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -774,11 +877,10 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddFood(string foodId, string category, string description, int calories, string? mealID = null, float? weight = null, float? protein = null, float? carbs = null, float? fibre = null, float? fat = null, float? cholestrol = null, float? sugar = null, float? satFat = null, float? vitB12 = null, float? vitB6 = null, float? vitK = null, float? vitE = null, float? vitC = null, float? vitA = null, float? zinc = null, float? magnesium = null, float? sodium = null, float? potassium = null, float? iron = null, float? calcium = null)
+        public string AddFood(string category, string description, int calories, string? mealID = null, float? weight = null, float? protein = null, float? carbs = null, float? fibre = null, float? fat = null, float? cholestrol = null, float? sugar = null, float? satFat = null, float? vitB12 = null, float? vitB6 = null, float? vitK = null, float? vitE = null, float? vitC = null, float? vitA = null, float? zinc = null, float? magnesium = null, float? sodium = null, float? potassium = null, float? iron = null, float? calcium = null)
         {
             TblFood food = new TblFood
             {
-                FoodId = foodId,
                 Category = category,
                 Description = description,
                 Calories = calories,
@@ -821,23 +923,49 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblFood>? GetAllFoods()
+        public async Task<List<Food>> GetAllFoods(int pageNumber, int pageSize)
         {
-            return context.TblFoods.ToList();
+            var tblfoods = await context.TblFoods
+                        .Skip((pageNumber - 1) * pageSize) // Skip records for previous pages
+                        .Take(pageSize)                   // Take the desired number of records
+                        .ToListAsync();
+
+            var foods = new List<Food>();
+
+            foreach(TblFood food in tblfoods)
+            {
+                foods.Add(new Food(food));
+            }
+
+            return foods;
         }
 
-        public TblFood? GetFood(string foodId)
+        public Food? GetFood(int foodId)
         {
-            return context.TblFoods.Find(foodId);
+            var food = context.TblFoods.Find(foodId);
+
+            if(food != null)
+            {
+                return new Food(food);
+            }
+
+            return null;
         }
 
-        public List<TblFood>? GetFoodsByMealId(string mealId)
+        public List<Food>? GetFoodsByMealId(string mealId)
         {
-            return context.TblFoods.Where(x => x.MealId == mealId).ToList();
+            var foods = new List<Food>();
+
+            foreach(TblFood food in context.TblFoods.Where(x => x.MealId == mealId).ToList())
+            {
+                foods.Add(new Food(food));
+            }
+
+            return foods;
         }
 
         //Update
-        public string UpdateFood(string foodId, string? category = null, string? description = null, int? calories = null, string? mealID = null, float? weight = null, float? protein = null, float? carbs = null, float? fibre = null, float? fat = null, float? cholestrol = null, float? sugar = null, float? satFat = null, float? vitB12 = null, float? vitB6 = null, float? vitK = null, float? vitE = null, float? vitC = null, float? vitA = null, float? zinc = null, float? magnesium = null, float? sodium = null, float? potassium = null, float? iron = null, float? calcium = null)
+        public string UpdateFood(int foodId, string? category = null, string? description = null, int? calories = null, string? mealID = null, float? weight = null, float? protein = null, float? carbs = null, float? fibre = null, float? fat = null, float? cholestrol = null, float? sugar = null, float? satFat = null, float? vitB12 = null, float? vitB6 = null, float? vitK = null, float? vitE = null, float? vitC = null, float? vitA = null, float? zinc = null, float? magnesium = null, float? sodium = null, float? potassium = null, float? iron = null, float? calcium = null)
         {
             var food = GetFood(foodId);
 
@@ -966,7 +1094,7 @@ namespace OPSCAPI.Models
             return "Food not found";
         }
 
-        public string UpdateFood(TblFood food)
+        public string UpdateFood(Food food)
         {
             try
             {
@@ -974,7 +1102,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = food;
+                    original = food.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -987,7 +1115,7 @@ namespace OPSCAPI.Models
         }
 
         //Delete
-        public string DeleteFood(string foodId)
+        public string DeleteFood(int foodId)
         {
             try
             {
@@ -1003,11 +1131,11 @@ namespace OPSCAPI.Models
 
         //Meal
         //Create
-        public string AddMeal(TblMeal meal)
+        public string AddMeal(Meal meal)
         {
             try
             {
-                context.TblMeals.Add(meal);
+                context.TblMeals.Add(meal.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -1016,7 +1144,7 @@ namespace OPSCAPI.Models
                 return $"Error: {ex}";
             }
         }
-         
+
         public string AddMeal(string mealId, string name, DateOnly? date = null, string? userId = null)
         {
             TblMeal meal = new TblMeal
@@ -1042,19 +1170,40 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblMeal>? GetAllMeals()
+        public List<Meal>? GetAllMeals()
         {
-            return context.TblMeals.ToList();
+            var meals = new List<Meal>();
+
+            foreach(TblMeal meal in context.TblMeals.ToList())
+            {
+                meals.Add(new Meal(meal));
+            }
+
+            return meals;
         }
 
-        public TblMeal? GetMeal(string mealId)
+        public Meal? GetMeal(string mealId)
         {
-            return context.TblMeals.Find(mealId);
+            var meal = context.TblMeals.Find(mealId);
+
+            if (meal != null)
+            {
+                return new Meal(meal);
+            }
+
+            return null;
         }
 
-        public List<TblMeal>? GetMealsByUID(string userId)
+        public List<Meal>? GetMealsByUID(string userId)
         {
-            return context.TblMeals.Where(x => x.UserId == userId).ToList();
+            var meals = new List<Meal>();
+
+            foreach(TblMeal meal in context.TblMeals.Where(x => x.UserId == userId).ToList())
+            {
+                meals.Add(new Meal(meal));
+            }
+
+            return meals;
         }
 
         //Update
@@ -1087,7 +1236,7 @@ namespace OPSCAPI.Models
             return "Meal not found";
         }
 
-        public string UpdateMeal(TblMeal meal)
+        public string UpdateMeal(Meal meal)
         {
             try
             {
@@ -1095,7 +1244,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = meal;
+                    original = meal.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }
@@ -1124,11 +1273,11 @@ namespace OPSCAPI.Models
 
         //Movement
         //Create
-        public string AddMovement(TblMovement movement)
+        public string AddMovement(Movement movement)
         {
             try
             {
-                context.TblMovements.Add(movement);
+                context.TblMovements.Add(movement.ConvertToEntity());
                 context.SaveChanges();
 
                 return "Success";
@@ -1166,14 +1315,28 @@ namespace OPSCAPI.Models
         }
 
         //Read
-        public List<TblMovement>? GetAllMovements()
+        public List<Movement>? GetAllMovements()
         {
-            return context.TblMovements.ToList();
+            var moves = new List<Movement>();
+
+            foreach(TblMovement move in context.TblMovements.ToList())
+            {
+                moves.Add(new Movement(move));
+            }
+
+            return moves;
         }
 
-        public TblMovement? GetMovement(string movementId)
+        public Movement? GetMovement(string movementId)
         {
-            return context.TblMovements.Find(movementId);
+            var move = context.TblMovements.Find(movementId);
+
+            if(move != null)
+            {
+                return new Movement(move);
+            }
+
+            return null;
         }
 
         //Update
@@ -1225,7 +1388,7 @@ namespace OPSCAPI.Models
             return "Movement not found";
         }
 
-        public string UpdateMovement(TblMovement movement)
+        public string UpdateMovement(Movement movement)
         {
             try
             {
@@ -1233,7 +1396,7 @@ namespace OPSCAPI.Models
 
                 if (original != null)
                 {
-                    original = movement;
+                    original = movement.ConvertToEntity();
                     context.SaveChanges();
                     return "Success";
                 }

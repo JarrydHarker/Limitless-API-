@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OPSCAPI.Models;
+namespace OPSCAPI.Models.Database;
 
 public partial class TblMeal
 {
@@ -14,6 +14,4 @@ public partial class TblMeal
     public string Name { get; set; } = null!;
 
     public virtual TblDay? TblDay { get; set; }
-
-    public virtual ICollection<TblFood> TblFoods { get; set; } = new List<TblFood>();
 }

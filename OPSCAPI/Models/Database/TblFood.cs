@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OPSCAPI.Models;
+namespace OPSCAPI.Models.Database;
 
 public partial class TblFood
 {
-    public string FoodId { get; set; } = null!;
+    public int FoodId { get; set; }
 
     public string? MealId { get; set; }
 
-    public string Category { get; set; } = null!;
+    public string? Category { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public double? Weight { get; set; }
 
@@ -54,6 +54,4 @@ public partial class TblFood
     public double? Iron { get; set; }
 
     public double? Calcium { get; set; }
-
-    public virtual TblMeal? Meal { get; set; }
 }
