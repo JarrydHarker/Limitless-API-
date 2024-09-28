@@ -135,7 +135,7 @@ namespace OPSCAPI.Models
 
     public class Workout
     {
-        public int WorkoutId { get; set; }
+        public int? WorkoutId { get; set; } = null;
 
         public DateOnly Date { get; set; }
 
@@ -150,13 +150,13 @@ namespace OPSCAPI.Models
 
         public TblWorkout ConvertToEntity()
         {
-            return new TblWorkout { Date = Date, UserId = UserId, WorkoutId = WorkoutId };
+            return new TblWorkout { Date = Date, UserId = UserId};
         }
     }
 
     public class Exercise
     {
-        public int ExerciseId { get; set; }
+        public int? ExerciseId { get; set; } = null;
 
         public int WorkoutId { get; set; }
 
@@ -171,7 +171,7 @@ namespace OPSCAPI.Models
 
         public TblExercise ConvertToEntity()
         {
-            return new TblExercise { ExerciseId = ExerciseId, WorkoutId = WorkoutId, MovementId = MovementId };
+            return new TblExercise {WorkoutId = WorkoutId, MovementId = MovementId };
         }
     }
 
@@ -222,7 +222,7 @@ namespace OPSCAPI.Models
 
     public class Meal
     {
-        public int MealId { get; set; }
+        public int? MealId { get; set; } = null;
 
         public DateOnly? Date { get; set; }
 
@@ -238,13 +238,13 @@ namespace OPSCAPI.Models
 
         public TblMeal ConvertToEntity()
         {
-            return new TblMeal { MealId = MealId, Name = Name };
+            return new TblMeal {Name = Name };
         }
     }
 
     public class Food
     {
-        public int FoodId { get; set; }
+        public int? FoodId { get; set; } = null;
 
         public string? MealId { get; set; }
 
@@ -324,7 +324,7 @@ namespace OPSCAPI.Models
 
         public TblFood ConvertToEntity()
         {
-            return new TblFood { FoodId = FoodId, Category = Category, Description = Description, Calcium = Calcium, Calories = Calories, Carbohydrates = Carbohydrates, Cholestrol = Cholestrol, Fat = Fat, Fibre = Fibre, Iron = Iron, Magnesium = Magnesium, Potassium = Potassium, Protein = Protein, SaturatedFat = SaturatedFat, Sodium = Sodium, Sugar = Sugar, VitaminA = VitaminA, VitaminB12 = VitaminB12, VitaminB6 = VitaminB6, VitaminC = VitaminC, VitaminE = VitaminE, VitaminK = VitaminK, Weight = Weight, Zinc = Zinc };
+            return new TblFood { Category = Category, Description = Description, Calcium = Calcium, Calories = Calories, Carbohydrates = Carbohydrates, Cholestrol = Cholestrol, Fat = Fat, Fibre = Fibre, Iron = Iron, Magnesium = Magnesium, Potassium = Potassium, Protein = Protein, SaturatedFat = SaturatedFat, Sodium = Sodium, Sugar = Sugar, VitaminA = VitaminA, VitaminB12 = VitaminB12, VitaminB6 = VitaminB6, VitaminC = VitaminC, VitaminE = VitaminE, VitaminK = VitaminK, Weight = Weight, Zinc = Zinc };
 
         }
     }
@@ -353,7 +353,7 @@ namespace OPSCAPI.Models
 
     public class Movement
     {
-        public int MovementId { get; set; } = 0;
+        public int? MovementId { get; set; } = null;
 
         public string Name { get; set; } = null!;
 
@@ -380,7 +380,7 @@ namespace OPSCAPI.Models
 
         public TblMovement ConvertToEntity()
         {
-            return new TblMovement { MovementId = MovementId, Description = Description, Name = Name, Type = Type, Bodypart = Bodypart, Equipment = Equipment, DifficultyLevel = DifficultyLevel};
+            return new TblMovement {Description = Description, Name = Name, Type = Type, Bodypart = Bodypart, Equipment = Equipment, DifficultyLevel = DifficultyLevel};
         }
     }
 }
