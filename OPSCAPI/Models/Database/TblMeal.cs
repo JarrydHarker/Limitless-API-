@@ -10,4 +10,6 @@ public partial class TblMeal
     public string Name { get; set; } = null!;
 
     public virtual ICollection<TblMealFood> TblMealFoods { get; set; } = new List<TblMealFood>();
+
+    
 }

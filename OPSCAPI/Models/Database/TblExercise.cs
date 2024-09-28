@@ -18,4 +18,6 @@ public partial class TblExercise
     public virtual TblMovement Movement { get; set; } = null!;
 
     public virtual TblWorkout Workout { get; set; } = null!;
+
+   
 }

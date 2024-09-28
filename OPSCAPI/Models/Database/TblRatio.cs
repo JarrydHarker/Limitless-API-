@@ -16,4 +16,6 @@ public partial class TblRatio
     public double Fat { get; set; }
 
     public virtual TblUserInfo User { get; set; } = null!;
+
+    
 }
