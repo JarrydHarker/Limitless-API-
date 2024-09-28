@@ -5,7 +5,7 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblWorkout
 {
-    public string WorkoutId { get; set; } = null!;
+    public int WorkoutId { get; set; }
 
     public DateOnly Date { get; set; }
 

@@ -7,8 +7,6 @@ public partial class TblFood
 {
     public int FoodId { get; set; }
 
-    public string? MealId { get; set; }
-
     public string? Category { get; set; }
 
     public string? Description { get; set; }
@@ -54,4 +52,6 @@ public partial class TblFood
     public double? Iron { get; set; }
 
     public double? Calcium { get; set; }
+
+    public virtual ICollection<TblMealFood> TblMealFoods { get; set; } = new List<TblMealFood>();
 }

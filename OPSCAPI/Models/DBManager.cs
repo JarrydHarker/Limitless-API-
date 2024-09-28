@@ -375,7 +375,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddWorkout(string workoutID, DateOnly date, string userID)
+        public string AddWorkout(int workoutID, DateOnly date, string userID)
         {
             try
             {
@@ -434,7 +434,7 @@ namespace OPSCAPI.Models
             return workouts;
         }
 
-        public Workout? GetWorkout(string workoutID)
+        public Workout? GetWorkout(int workoutID)
         {
             var workout = context.TblWorkouts.Find(workoutID);
 
@@ -447,7 +447,7 @@ namespace OPSCAPI.Models
         }
 
         //Update
-        public string UpdateWorkout(string workoutID, DateOnly? date = null, string? userID = null)
+        public string UpdateWorkout(int workoutID, DateOnly? date = null, string? userID = null)
         {
             var workout = GetWorkout(workoutID);
 
@@ -494,7 +494,7 @@ namespace OPSCAPI.Models
         }
 
         //Delete  
-        public string DeleteWorkout(string workoutID)
+        public string DeleteWorkout(int workoutID)
         {
             try
             {
@@ -524,7 +524,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddExercise(string exerciseID, string workoutID, int movementID, int sets, int reps, bool favourite)
+        public string AddExercise(int exerciseID, int workoutID, int movementID, int sets, int reps, bool favourite)
         {
             try
             {
@@ -546,7 +546,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddExercise(string exerciseID, string workoutID, int movementID, int time, float distance)
+        public string AddExercise(int exerciseID, int workoutID, int movementID, int time, float distance)
         {
             try
             {
@@ -582,7 +582,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddCardio(string exerciseID, int time, float distance)
+        public string AddCardio(int exerciseID, int time, float distance)
         {
             try
             {
@@ -618,7 +618,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddStrength(string exerciseID, int sets, int reps, bool favourite)
+        public string AddStrength(int exerciseID, int sets, int reps, bool favourite)
         {
             try
             {
@@ -677,7 +677,7 @@ namespace OPSCAPI.Models
             return strengths;
         }
 
-        public List<Exercise>? GetExercisesByWorkoutId(string workoutId)
+        public List<Exercise>? GetExercisesByWorkoutId(int workoutId)
         {
             var exercises = new List<Exercise>();
 
@@ -701,7 +701,7 @@ namespace OPSCAPI.Models
             return exercises;
         }
 
-        public Exercise? GetExercise(string exerciseID)
+        public Exercise? GetExercise(int exerciseID)
         {
             var exercise = context.TblExercises.Find(exerciseID);
 
@@ -713,7 +713,7 @@ namespace OPSCAPI.Models
             return null;
         }
 
-        public Strength? GetStrength(string exerciseID)
+        public Strength? GetStrength(int exerciseID)
         {
             var strength = context.TblStrengthExercises.Find(exerciseID);
 
@@ -725,7 +725,7 @@ namespace OPSCAPI.Models
             return null;
         }
 
-        public Cardio? GetCardio(string exerciseID)
+        public Cardio? GetCardio(int exerciseID)
         {
             var cardio = context.TblCardioExercises.Find(exerciseID);
 
@@ -738,7 +738,7 @@ namespace OPSCAPI.Models
         }
 
         //Update
-        public string UpdateExercise(string exerciseID, string? workoutID = null, int? movementID = null)
+        public string UpdateExercise(int exerciseID, int? workoutID = null, int? movementID = null)
         {
             var exercise = context.TblExercises.Find(exerciseID);
 
@@ -746,7 +746,7 @@ namespace OPSCAPI.Models
             {
                 if (workoutID != null)
                 {
-                    exercise.WorkoutId = workoutID;
+                    exercise.WorkoutId = (int)workoutID;
                 }
 
                 if (movementID != null)
@@ -778,7 +778,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string UpdateCardio(string exerciseID, int? time = null, float? distance = null)
+        public string UpdateCardio(int exerciseID, int? time = null, float? distance = null)
         {
             var cardio = context.TblCardioExercises.Find(exerciseID);
 
@@ -820,7 +820,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string UpdateStrength(string exerciseID, int? sets = null, int? reps = null, bool? favourite = null)
+        public string UpdateStrength(int exerciseID, int? sets = null, int? reps = null, bool? favourite = null)
         {
             var strength = context.TblStrengthExercises.Find(exerciseID);
 
@@ -868,7 +868,7 @@ namespace OPSCAPI.Models
         }
 
         //Delete
-        public string DeleteExercise(string exerciseID)
+        public string DeleteExercise(int exerciseID)
         {
             try
             {
@@ -884,7 +884,7 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string DeleteStrength(string exerciseID)
+        public string DeleteStrength(int exerciseID)
         {
             try
             {
@@ -906,7 +906,7 @@ namespace OPSCAPI.Models
 
         }
 
-        public string DeleteCardio(string exerciseID)
+        public string DeleteCardio(int exerciseID)
         {
             try
             {
@@ -949,7 +949,6 @@ namespace OPSCAPI.Models
                 Calories = calories,
             };
 
-            food.MealId = mealID != null ? mealID : null;
             food.Weight = weight != null ? weight : null;
             food.Protein = protein != null ? protein : null;
             food.Carbohydrates = carbs != null ? carbs : null;
@@ -1015,13 +1014,18 @@ namespace OPSCAPI.Models
             return null;
         }
 
-        public List<Food>? GetFoodsByMealId(string mealId)
+        public List<Food>? GetFoodsByMealId(int mealId)
         {
             var foods = new List<Food>();
 
-            foreach (TblFood food in context.TblFoods.Where(x => x.MealId == mealId).ToList())
+            foreach (TblMealFood mealfood in context.TblMealFoods.Where(x => x.MealId == mealId).ToList())
             {
-                foods.Add(new Food(food));
+                var food = context.TblFoods.Find(mealfood.FoodId);
+
+                if (food != null)
+                {
+                    foods.Add(new Food(food));
+                }
             }
 
             return foods;
@@ -1227,17 +1231,13 @@ namespace OPSCAPI.Models
             }
         }
 
-        public string AddMeal(string mealId, string name, DateOnly? date = null, string? userId = null)
+        public string AddMeal(int mealId, string name, DateOnly? date = null, string? userId = null)
         {
             TblMeal meal = new TblMeal
             {
                 MealId = mealId,
                 Name = name,
             };
-
-            meal.Date = date != null ? date : null;
-            meal.UserId = userId != null ? userId : null;
-
 
             try
             {
@@ -1264,7 +1264,7 @@ namespace OPSCAPI.Models
             return meals;
         }
 
-        public Meal? GetMeal(string mealId)
+        public Meal? GetMeal(int mealId)
         {
             var meal = context.TblMeals.Find(mealId);
 
@@ -1280,16 +1280,21 @@ namespace OPSCAPI.Models
         {
             var meals = new List<Meal>();
 
-            foreach (TblMeal meal in context.TblMeals.Where(x => x.UserId == userId).ToList())
+            foreach (TblMealFood mealFood in context.TblMealFoods.Where(x => x.UserId == userId).ToList())
             {
-                meals.Add(new Meal(meal));
+                var meal = context.TblMeals.Find(mealFood.MealId);
+
+                if(meal != null)
+                {
+                    meals.Add(new Meal(meal));
+                }
             }
 
             return meals;
         }
 
         //Update
-        public string UpdateMeal(string mealId, string? name = null, DateOnly? date = null, string? userId = null)
+        public string UpdateMeal(int mealId, string? name = null, DateOnly? date = null, string? userId = null)
         {
             var meal = GetMeal(mealId);
 
@@ -1339,7 +1344,7 @@ namespace OPSCAPI.Models
         }
 
         //Delete
-        public string DeleteMeal(string mealId)
+        public string DeleteMeal(int mealId)
         {
             try
             {

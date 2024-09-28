@@ -5,9 +5,9 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblExercise
 {
-    public string ExerciseId { get; set; } = null!;
+    public int ExerciseId { get; set; }
 
-    public string WorkoutId { get; set; } = null!;
+    public int WorkoutId { get; set; }
 
     public int MovementId { get; set; }
 

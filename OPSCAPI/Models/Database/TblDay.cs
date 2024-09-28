@@ -19,7 +19,7 @@ public partial class TblDay
 
     public double Water { get; set; }
 
-    public virtual ICollection<TblMeal> TblMeals { get; set; } = new List<TblMeal>();
+    public virtual ICollection<TblMealFood> TblMealFoods { get; set; } = new List<TblMealFood>();
 
     public virtual ICollection<TblWorkout> TblWorkouts { get; set; } = new List<TblWorkout>();
 
