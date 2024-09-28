@@ -135,7 +135,7 @@ namespace OPSCAPI.Models
 
     public class Workout
     {
-        public string WorkoutId { get; set; } = null!;
+        public int WorkoutId { get; set; }
 
         public DateOnly Date { get; set; }
 
@@ -156,11 +156,11 @@ namespace OPSCAPI.Models
 
     public class Exercise
     {
-        public string ExerciseId { get; set; } = null!;
+        public int ExerciseId { get; set; }
 
-        public string WorkoutId { get; set; } = null!;
+        public int WorkoutId { get; set; }
 
-        public int MovementId { get; set; } = 0;
+        public int MovementId { get; set; }
 
         public Exercise(TblExercise exercise)
         {
@@ -177,7 +177,7 @@ namespace OPSCAPI.Models
 
     public class Cardio
     {
-        public string ExerciseId { get; set; } = null!;
+        public int ExerciseId { get; set; }
 
         public int Time { get; set; }
 
@@ -198,7 +198,7 @@ namespace OPSCAPI.Models
 
     public class Strength
     {
-        public string ExerciseId { get; set; } = null!;
+        public int ExerciseId { get; set; }
 
         public int Sets { get; set; }
 
@@ -222,7 +222,7 @@ namespace OPSCAPI.Models
 
     public class Meal
     {
-        public string MealId { get; set; } = null!;
+        public int MealId { get; set; }
 
         public DateOnly? Date { get; set; }
 
@@ -233,14 +233,12 @@ namespace OPSCAPI.Models
         public Meal(TblMeal meal)
         {
             MealId = meal.MealId;
-            Date = meal.Date;
-            UserId = meal.UserId;
             Name = meal.Name;
         }
 
         public TblMeal ConvertToEntity()
         {
-            return new TblMeal { MealId = MealId, Date = Date, UserId = UserId, Name = Name };
+            return new TblMeal { MealId = MealId, Name = Name };
         }
     }
 
@@ -299,7 +297,6 @@ namespace OPSCAPI.Models
         public Food(TblFood food)
         {
             FoodId = food.FoodId;
-            MealId = food.MealId;
             Category = food.Category;
             Description = food.Description;
             Weight = food.Weight;
@@ -327,16 +324,20 @@ namespace OPSCAPI.Models
 
         public TblFood ConvertToEntity()
         {
-            return new TblFood { FoodId = FoodId, MealId = MealId, Category = Category, Description = Description, Calcium = Calcium, Calories = Calories, Carbohydrates = Carbohydrates, Cholestrol = Cholestrol, Fat = Fat, Fibre = Fibre, Iron = Iron, Magnesium = Magnesium, Potassium = Potassium, Protein = Protein, SaturatedFat = SaturatedFat, Sodium = Sodium, Sugar = Sugar, VitaminA = VitaminA, VitaminB12 = VitaminB12, VitaminB6 = VitaminB6, VitaminC = VitaminC, VitaminE = VitaminE, VitaminK = VitaminK, Weight = Weight, Zinc = Zinc };
+            return new TblFood { FoodId = FoodId, Category = Category, Description = Description, Calcium = Calcium, Calories = Calories, Carbohydrates = Carbohydrates, Cholestrol = Cholestrol, Fat = Fat, Fibre = Fibre, Iron = Iron, Magnesium = Magnesium, Potassium = Potassium, Protein = Protein, SaturatedFat = SaturatedFat, Sodium = Sodium, Sugar = Sugar, VitaminA = VitaminA, VitaminB12 = VitaminB12, VitaminB6 = VitaminB6, VitaminC = VitaminC, VitaminE = VitaminE, VitaminK = VitaminK, Weight = Weight, Zinc = Zinc };
 
         }
     }
 
     public class MealFood
     {
-        public string MealId { get; set; } = null!;
+        public int MealId { get; set; }
 
         public int FoodId { get; set; }
+
+        public DateOnly Date {  get; set; }
+
+        public string? UserId { get; set; }
 
         public MealFood(TblMealFood mealFood)
         {

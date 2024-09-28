@@ -5,13 +5,9 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblMeal
 {
-    public string MealId { get; set; } = null!;
-
-    public DateOnly? Date { get; set; }
-
-    public string? UserId { get; set; }
+    public int MealId { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public virtual TblDay? TblDay { get; set; }
+    public virtual ICollection<TblMealFood> TblMealFoods { get; set; } = new List<TblMealFood>();
 }

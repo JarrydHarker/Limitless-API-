@@ -52,8 +52,7 @@ public partial class LimitlessDbContext : DbContext
             entity.ToTable("tblCardioExercise");
 
             entity.Property(e => e.ExerciseId)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .ValueGeneratedNever()
                 .HasColumnName("ExerciseID");
         });
 
@@ -81,14 +80,10 @@ public partial class LimitlessDbContext : DbContext
             entity.ToTable("tblExercise");
 
             entity.Property(e => e.ExerciseId)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("ExerciseID");
             entity.Property(e => e.MovementId).HasColumnName("MovementID");
-            entity.Property(e => e.WorkoutId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("WorkoutID");
+            entity.Property(e => e.WorkoutId).HasColumnName("WorkoutID");
 
             entity.HasOne(d => d.Exercise).WithOne(p => p.TblExercise)
                 .HasForeignKey<TblExercise>(d => d.ExerciseId)
@@ -119,10 +114,6 @@ public partial class LimitlessDbContext : DbContext
 
             entity.Property(e => e.FoodId).HasColumnName("FoodID");
             entity.Property(e => e.Category).HasMaxLength(250);
-            entity.Property(e => e.MealId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MealID");
         });
 
         modelBuilder.Entity<TblMeal>(entity =>
@@ -131,42 +122,36 @@ public partial class LimitlessDbContext : DbContext
 
             entity.ToTable("tblMeal");
 
-            entity.Property(e => e.MealId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MealID");
+            entity.Property(e => e.MealId).HasColumnName("MealID");
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<TblMealFood>(entity =>
+        {
+            entity.HasKey(e => new { e.MealId, e.FoodId, e.Date });
+
+            entity.ToTable("tblMeal_Food");
+
+            entity.Property(e => e.MealId).HasColumnName("MealID");
+            entity.Property(e => e.FoodId).HasColumnName("FoodID");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("UserID");
 
-            entity.HasOne(d => d.TblDay).WithMany(p => p.TblMeals)
-                .HasForeignKey(d => new { d.Date, d.UserId })
-                .HasConstraintName("FK_tblMeal_tblDay1");
-        });
-
-        modelBuilder.Entity<TblMealFood>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("tblMeal_Food");
-
-            entity.Property(e => e.FoodId).HasColumnName("FoodID");
-            entity.Property(e => e.MealId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("MealID");
-
-            entity.HasOne(d => d.Food).WithMany()
+            entity.HasOne(d => d.Food).WithMany(p => p.TblMealFoods)
                 .HasForeignKey(d => d.FoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tblMeal_Food_tblFood");
 
-            entity.HasOne(d => d.Meal).WithMany()
+            entity.HasOne(d => d.Meal).WithMany(p => p.TblMealFoods)
                 .HasForeignKey(d => d.MealId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tblMeal_Food_tblMeal");
+
+            entity.HasOne(d => d.TblDay).WithMany(p => p.TblMealFoods)
+                .HasForeignKey(d => new { d.Date, d.UserId })
+                .HasConstraintName("FK_tblMeal_Food_tblDay");
         });
 
         modelBuilder.Entity<TblMovement>(entity =>
@@ -207,8 +192,7 @@ public partial class LimitlessDbContext : DbContext
             entity.ToTable("tblStrengthExercise");
 
             entity.Property(e => e.ExerciseId)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .ValueGeneratedNever()
                 .HasColumnName("ExerciseID");
         });
 
@@ -251,10 +235,7 @@ public partial class LimitlessDbContext : DbContext
 
             entity.ToTable("tblWorkout");
 
-            entity.Property(e => e.WorkoutId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("WorkoutID");
+            entity.Property(e => e.WorkoutId).HasColumnName("WorkoutID");
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .IsFixedLength()

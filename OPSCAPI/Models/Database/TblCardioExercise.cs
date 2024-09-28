@@ -5,7 +5,7 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblCardioExercise
 {
-    public string ExerciseId { get; set; } = null!;
+    public int ExerciseId { get; set; }
 
     public int Time { get; set; }
 

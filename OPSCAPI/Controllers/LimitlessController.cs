@@ -43,7 +43,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Exercise")]
-        public Exercise? GetExercise(string exerciseId)
+        public Exercise? GetExercise(int exerciseId)
         {
             return manager.GetExercise(exerciseId);
         }
@@ -55,7 +55,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Cardio")]
-        public Cardio? GetCardio(string exerciseId)
+        public Cardio? GetCardio(int exerciseId)
         {
             return manager.GetCardio(exerciseId);
         }
@@ -67,7 +67,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Strength")]
-        public Strength? GetStrength(string exerciseId)
+        public Strength? GetStrength(int exerciseId)
         {
             return manager.GetStrength(exerciseId);
         }
@@ -79,7 +79,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Meal")]
-        public Meal? GetMeal(string mealId)
+        public Meal? GetMeal(int mealId)
         {
             return manager.GetMeal(mealId);
         }
@@ -127,7 +127,7 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpGet("Workout")]
-        public Workout? GetWorkout(string workoutId)
+        public Workout? GetWorkout(int workoutId)
         {
             return manager.GetWorkout(workoutId);
         }
@@ -283,39 +283,39 @@ namespace OPSCAPI.Controllers
         }
 
         [HttpDelete("Workout")]
-        public string DeleteWorkout(string workout)
+        public string DeleteWorkout(int workoutId)
         {
-            return manager.DeleteWorkout(workout);
+            return manager.DeleteWorkout(workoutId);
         }
 
         [HttpDelete("Meal")]
-        public string DeleteMeal(string meal)
+        public string DeleteMeal(int mealId)
         {
-            return manager.DeleteMeal(meal);
+            return manager.DeleteMeal(mealId);
         }
 
         [HttpDelete("Food")]
-        public string DeleteFood(int food)
+        public string DeleteFood(int foodId)
         {
-            return manager.DeleteFood(food);
+            return manager.DeleteFood(foodId);
         }
 
         [HttpDelete("Exercise")]
-        public string DeleteExercise(string exercise)
+        public string DeleteExercise(int exerciseId)
         {
-            return manager.DeleteExercise(exercise);
+            return manager.DeleteExercise(exerciseId);
         }
 
         [HttpDelete("Cardio")]
-        public string DeleteCardio(string cardio)
+        public string DeleteCardio(int cardioId)
         {
-            return manager.DeleteCardio(cardio);
+            return manager.DeleteCardio(cardioId);
         }
 
         [HttpDelete("Strength")]
-        public string DeleteStrength(string strength)
+        public string DeleteStrength(int strengthId)
         {
-            return manager.DeleteStrength(strength);
+            return manager.DeleteStrength(strengthId);
         }
 
         [HttpDelete("Movement")]
