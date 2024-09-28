@@ -5,8 +5,6 @@ namespace OPSCAPI.Models.Database;
 
 public partial class TblDay
 {
-
-
     public DateOnly Date { get; set; }
 
     public string UserId { get; set; } = null!;

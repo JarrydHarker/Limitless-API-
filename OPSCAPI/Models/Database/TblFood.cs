@@ -54,6 +54,4 @@ public partial class TblFood
     public double? Calcium { get; set; }
 
     public virtual ICollection<TblMealFood> TblMealFoods { get; set; } = new List<TblMealFood>();
-
-    
 }

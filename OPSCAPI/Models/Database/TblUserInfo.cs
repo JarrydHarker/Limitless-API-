@@ -20,6 +20,4 @@ public partial class TblUserInfo
     public virtual TblRatio? TblRatio { get; set; }
 
     public virtual TblUser User { get; set; } = null!;
-
-   
 }

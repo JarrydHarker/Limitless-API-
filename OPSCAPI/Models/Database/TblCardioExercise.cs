@@ -12,6 +12,4 @@ public partial class TblCardioExercise
     public double Distance { get; set; }
 
     public virtual TblExercise? TblExercise { get; set; }
-
-   
 }

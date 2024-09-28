@@ -20,6 +20,4 @@ public partial class TblMovement
     public string DifficultyLevel { get; set; } = null!;
 
     public virtual ICollection<TblExercise> TblExercises { get; set; } = new List<TblExercise>();
-
-    
 }

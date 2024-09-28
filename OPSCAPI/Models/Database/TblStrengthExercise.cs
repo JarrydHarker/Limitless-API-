@@ -14,6 +14,4 @@ public partial class TblStrengthExercise
     public bool Favourite { get; set; }
 
     public virtual TblExercise? TblExercise { get; set; }
-
-    
 }
