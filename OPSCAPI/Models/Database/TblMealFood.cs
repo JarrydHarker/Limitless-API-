@@ -18,4 +18,6 @@ public partial class TblMealFood
     public virtual TblMeal Meal { get; set; } = null!;
 
     public virtual TblDay? TblDay { get; set; }
+
+   
 }
