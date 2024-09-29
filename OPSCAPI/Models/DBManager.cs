@@ -1538,5 +1538,38 @@ namespace OPSCAPI.Models
                 return $"Error: {ex}";
             }
         }
+
+        public string AddMealFood(MealFood mealfood)
+        {
+            try
+            {
+                context.TblMealFoods.Add(mealfood.ConvertToEntity());
+                context.SaveChanges();
+
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return $"Error: {ex}";
+            }
+        }
+
+        public List<Meal>? GetUserMealsByDate(string userId, DateOnly date)
+        {
+
+            var meals = new List<Meal>();
+
+            foreach (TblMealFood mealFood in context.TblMealFoods.Where(x => x.UserId == userId && x.Date == date).ToList())
+            {
+                var meal = context.TblMeals.Find(mealFood.MealId);
+
+                if (meal != null)
+                {
+                    meals.Add(new Meal(meal));
+                }
+            }
+
+            return meals;
+        }
     }
 }

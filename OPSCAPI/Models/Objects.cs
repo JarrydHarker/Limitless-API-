@@ -377,6 +377,7 @@ namespace OPSCAPI.Models
 
         public string DifficultyLevel { get; set; } = null!;
 
+        
         public Movement(TblMovement movement) 
         {
             MovementId = movement.MovementId;
@@ -392,5 +393,6 @@ namespace OPSCAPI.Models
         {
             return new TblMovement {Description = Description, Name = Name, Type = Type, Bodypart = Bodypart, Equipment = Equipment, DifficultyLevel = DifficultyLevel};
         }
+
     }
 }
