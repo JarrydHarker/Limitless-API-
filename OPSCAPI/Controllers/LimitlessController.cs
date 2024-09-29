@@ -111,7 +111,7 @@ namespace OPSCAPI.Controllers
         {
             return manager.GetFood(foodId);
         }
-        [HttpGet("Ratio")]
+        [HttpGet("Ratios")]
         public Ratios? GetRatios(string ratios)
         {
             return manager.GetRatios(ratios);
