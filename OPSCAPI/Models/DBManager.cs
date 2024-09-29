@@ -456,6 +456,17 @@ namespace OPSCAPI.Models
 
             return null;
         }
+        public Ratios? GetRatios(string userID)
+        {
+            var ratio = context.TblRatios.Find(userID);
+
+            if (ratio != null)
+            {
+                return new Ratios(ratio);
+            }
+
+            return null;
+        }
 
         //Update
         public string UpdateWorkout(int workoutID, DateOnly? date = null, string? userID = null)
