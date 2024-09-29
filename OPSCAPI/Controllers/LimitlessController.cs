@@ -122,7 +122,7 @@ namespace OPSCAPI.Controllers
         {
             return await manager.GetAllFoods(pageNumber, pageSize);
         }
-        //meal food user infos
+
         [HttpGet("Food/Search")]
         public async Task<List<Food>> SearchForFoods(string strSearch)
         {
@@ -158,6 +158,13 @@ namespace OPSCAPI.Controllers
         {
             return manager.GetAllWorkouts();
         }
+
+        [HttpGet("Workout/User/Date")]
+        public List<Workout>? GetUserWorkoutsByDate(string userId, DateOnly date)
+        {
+            return manager.GetUserWorkoutsByDate(userId, date);
+        }
+
         //GET Methods//
 
         //POST Methods//
