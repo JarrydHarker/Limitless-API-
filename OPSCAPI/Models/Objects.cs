@@ -14,6 +14,7 @@ namespace OPSCAPI.Models
 
         public string Password { get; set; } = null!;
 
+        public User() { }
         public User(TblUser user)
         {
             UserId = user.UserId;
@@ -43,6 +44,7 @@ namespace OPSCAPI.Models
 
         public double StepGoal { get; set; }
 
+        public UserInfo() { }
         public UserInfo(TblUserInfo userInfo)
         {
             UserId = userInfo.UserId;
@@ -70,7 +72,7 @@ namespace OPSCAPI.Models
         public double Fibre { get; set; }
 
         public double Fat { get; set; }
-
+        public Ratios() { }
         public Ratios(TblRatio ratio) 
         {
             UserId = ratio.UserId;
@@ -88,6 +90,7 @@ namespace OPSCAPI.Models
 
     public class Day
     {
+        public Day() { }
         public DateOnly Date { get; set; }
 
         public string UserId { get; set; } = null!;
@@ -135,6 +138,7 @@ namespace OPSCAPI.Models
 
     public class Workout
     {
+        public Workout() { }
         public int? WorkoutId { get; set; } = null;
 
         public DateOnly Date { get; set; }
@@ -156,6 +160,7 @@ namespace OPSCAPI.Models
 
     public class Exercise
     {
+        public Exercise() { }
         public int? ExerciseId { get; set; } = null;
 
         public int WorkoutId { get; set; }
@@ -189,7 +194,7 @@ namespace OPSCAPI.Models
             Time = cardio.Time;
             Distance = cardio.Distance;
         }
-
+        public Cardio() { }
         public TblCardioExercise ConvertToEntity()
         {
             return new TblCardioExercise { ExerciseId = ExerciseId, Time = Time, Distance = Distance };
@@ -198,6 +203,7 @@ namespace OPSCAPI.Models
 
     public class Strength
     {
+        public Strength() { }
         public int ExerciseId { get; set; }
 
         public int Sets { get; set; }
@@ -222,6 +228,7 @@ namespace OPSCAPI.Models
 
     public class Meal
     {
+        public Meal() { }
         public int? MealId { get; set; } = null;
 
         public DateOnly? Date { get; set; }
@@ -244,6 +251,7 @@ namespace OPSCAPI.Models
 
     public class Food
     {
+        public Food() { }
         public int? FoodId { get; set; } = null;
 
         public string? MealId { get; set; }
@@ -331,6 +339,7 @@ namespace OPSCAPI.Models
 
     public class MealFood
     {
+        public MealFood() { }
         public int MealId { get; set; }
 
         public int FoodId { get; set; }
@@ -353,6 +362,7 @@ namespace OPSCAPI.Models
 
     public class Movement
     {
+        public Movement() { }
         public int? MovementId { get; set; } = null;
 
         public string Name { get; set; } = null!;
