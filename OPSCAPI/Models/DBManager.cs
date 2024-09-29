@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OPSCAPI.Models.Database;
 
 namespace OPSCAPI.Models
 {

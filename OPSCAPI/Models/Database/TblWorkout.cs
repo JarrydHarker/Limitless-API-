@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OPSCAPI.Models;
+namespace OPSCAPI.Models.Database;
 
 public partial class TblWorkout
 {
@@ -10,8 +10,6 @@ public partial class TblWorkout
     public DateOnly Date { get; set; }
 
     public string UserId { get; set; } = null!;
-
-    public string Name { get; set; } = null!;
 
     public virtual TblDay TblDay { get; set; } = null!;
 
