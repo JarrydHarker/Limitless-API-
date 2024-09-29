@@ -111,6 +111,11 @@ namespace OPSCAPI.Controllers
         {
             return manager.GetFood(foodId);
         }
+        [HttpGet("Ratio")]
+        public Ratios? GetRatios(string ratios)
+        {
+            return manager.GetRatios(ratios);
+        }
 
         [HttpGet("Food/All")]
         public async Task<List<Food>> GetAllFoods(int pageNumber, int pageSize)
