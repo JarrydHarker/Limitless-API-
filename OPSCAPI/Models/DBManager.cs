@@ -433,6 +433,18 @@ namespace OPSCAPI.Models
             return workouts;
         }
 
+        public List<Workout>? GetUserWorkoutsByDate(string userId, DateOnly date)
+        {
+            var workouts = new List<Workout>();
+
+            foreach (TblWorkout workout in context.TblWorkouts.Where(x => x.UserId == userId && x.Date == date).ToList())
+            {
+                workouts.Add(new Workout(workout));
+            }
+
+            return workouts;
+        }
+
         public List<Workout>? GetWorkoutsByUID(string userId)
         {
             var workouts = new List<Workout>();
