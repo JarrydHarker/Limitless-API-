@@ -11,6 +11,8 @@ public partial class TblWorkout
 
     public string UserId { get; set; } = null!;
 
+    public string Name { get; set; } = null!;
+
     public virtual TblDay TblDay { get; set; } = null!;
 
     public virtual ICollection<TblExercise> TblExercises { get; set; } = new List<TblExercise>();

@@ -13,9 +13,15 @@ namespace OPSCAPI.Controllers
 
         //GET Methods//
         [HttpGet("User")]
-        public User? GetUser(string userId) 
+        public User? GetUser(string userId)
         {
             return manager.GetUser(userId);
+        }
+
+        [HttpGet("User/Email")]
+        public User? GetUserByEmail(string email)
+        {
+            return manager.GetUserByEmail(email);
         }
 
         [HttpGet("User/All")]
