@@ -95,6 +95,16 @@ namespace OPSCAPI.Controllers
         {
             return manager.GetAllMeals();
         }
+        [HttpGet("Meal/User")]
+        public List<Meal>? GetMealsByUserId(string userId)
+        {
+            return manager.GetMealsByUID(userId);
+        }
+        [HttpGet("Meal/User/Date")]
+        public List<Meal>? GetUserMealsByDate(string userId, DateOnly date)
+        {
+            return manager.GetUserMealsByDate(userId, date);
+        }
 
         [HttpGet("Food")]
         public Food? GetFood(int foodId)
@@ -107,7 +117,7 @@ namespace OPSCAPI.Controllers
         {
             return await manager.GetAllFoods(pageNumber, pageSize);
         }
-
+        //meal food user infos
         [HttpGet("Food/Search")]
         public async Task<List<Food>> SearchForFoods(string strSearch)
         {
@@ -204,6 +214,12 @@ namespace OPSCAPI.Controllers
         public string AddMovement(Movement movement)
         {
             return manager.AddMovement(movement);
+        }
+
+        [HttpPost("MealFoods")]
+        public string AddMealFood(MealFood mealfood)
+        {
+            return manager.AddMealFood(mealfood);
         }
         //POST Methods//
 
