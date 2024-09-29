@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace OPSCAPI.Models.Database;
 
 public partial class LimitlessDbContext : DbContext
@@ -45,6 +46,8 @@ public partial class LimitlessDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         modelBuilder.Entity<TblCardioExercise>(entity =>
         {
             entity.HasKey(e => e.ExerciseId).HasName("PK_tblCardio");
@@ -236,6 +239,7 @@ public partial class LimitlessDbContext : DbContext
             entity.ToTable("tblWorkout");
 
             entity.Property(e => e.WorkoutId).HasColumnName("WorkoutID");
+            entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .IsFixedLength()

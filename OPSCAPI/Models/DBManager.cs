@@ -70,6 +70,17 @@ namespace OPSCAPI.Models
 
             return null;
         }
+        public User? GetUserByEmail(string email)
+        {
+            var user = context.TblUsers.Where(x => x.Email == email).FirstOrDefault();
+
+            if (user != null)
+            {
+                return new User(user);
+            }
+
+            return null;
+        }
 
         //Update
         public string UpdateUser(string userID, string? name = null, string? surname = null, string? email = null, string? password = null, float? weightGoal = null, float? calorieWallet = null, int? stepGoal = null)
