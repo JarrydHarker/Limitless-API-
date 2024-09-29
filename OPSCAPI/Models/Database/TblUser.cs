@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OPSCAPI.Models.Database;
+namespace OPSCAPI.Models;
 
 public partial class TblUser
 {

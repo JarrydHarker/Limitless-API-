@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace OPSCAPI.Models.Database;
+namespace OPSCAPI.Models;
 
 public partial class LimitlessDbContext : DbContext
 {
@@ -236,6 +236,7 @@ public partial class LimitlessDbContext : DbContext
             entity.ToTable("tblWorkout");
 
             entity.Property(e => e.WorkoutId).HasColumnName("WorkoutID");
+            entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.UserId)
                 .HasMaxLength(10)
                 .IsFixedLength()
