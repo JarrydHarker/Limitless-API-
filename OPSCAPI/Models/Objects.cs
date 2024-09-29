@@ -141,16 +141,19 @@ namespace OPSCAPI.Models
 
         public string UserId { get; set; } = null!;
 
+        public string Name { get; set; }
+
         public Workout(TblWorkout workout)
         {
             WorkoutId = workout.WorkoutId;
             Date = workout.Date;
             UserId = workout.UserId;
+            Name = workout.Name;
         }
 
         public TblWorkout ConvertToEntity()
         {
-            return new TblWorkout { Date = Date, UserId = UserId};
+            return new TblWorkout { Date = Date, UserId = UserId, Name = Name};
         }
     }
 
