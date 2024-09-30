@@ -445,7 +445,7 @@ namespace OPSCAPI.Models
             return workouts;
         }
 
-        public List<Workout>? GetWorkoutsByUID(string userId)
+        public List<Workout>? GetUserWorkouts(string userId)
         {
             var workouts = new List<Workout>();
 
