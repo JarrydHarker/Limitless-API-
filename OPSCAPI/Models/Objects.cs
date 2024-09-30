@@ -146,6 +146,8 @@ namespace OPSCAPI.Models
 
         public string UserId { get; set; } = null!;
 
+        public string Name { get; set; }
+
         public Workout(TblWorkout workout)
         {
             WorkoutId = workout.WorkoutId;
@@ -155,7 +157,7 @@ namespace OPSCAPI.Models
 
         public TblWorkout ConvertToEntity()
         {
-            return new TblWorkout { Date = Date, UserId = UserId};
+            return new TblWorkout { Date = Date, UserId = UserId, Name = Name};
         }
     }
 
