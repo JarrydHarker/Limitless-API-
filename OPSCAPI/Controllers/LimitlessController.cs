@@ -176,6 +176,11 @@ namespace OPSCAPI.Controllers
         {
             return manager.GetWorkoutByName(name, date);
         }
+        [HttpGet("Meal/Name")]
+        public Meal? GetMealByName(string name, DateOnly date)
+        {
+            return manager.GetMealByName(name, date);
+        }
 
         //GET Methods//
 
