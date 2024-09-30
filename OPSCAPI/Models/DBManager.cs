@@ -477,13 +477,46 @@ namespace OPSCAPI.Models
             {
                 var workout = workouts.Where(x => x.Date == date).FirstOrDefault();
 
-                if(workout != null)
+                if (workout != null)
                 {
                     return new Workout(workout);
                 }
-            }else
+            }
+            else
             {
                 return new Workout(workouts[0]);
+            }
+
+            return null;
+        }
+       
+    public Meal? GetMealByName(string name, DateOnly date)
+        {
+            var meals = context.TblMeals.Where(x => x.Name == name).ToList();
+
+            if (meals.Count() > 1)
+            {
+                var mealfoods = context.TblMealFoods.Where(x => x.Date == date).ToList();
+                
+                foreach (var meal in meals)
+                {
+                    foreach (var mealfood in mealfoods)
+                    {
+                        if(meal.MealId == mealfood.MealId)
+                        {
+                            var cmeal = meals.Where(x => x.MealId == meal.MealId).FirstOrDefault();
+
+                            if (cmeal != null)
+                            {
+                                return new Meal(cmeal);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return new Meal(meals[0]);
             }
 
             return null;
