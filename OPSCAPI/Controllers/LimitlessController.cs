@@ -171,6 +171,12 @@ namespace OPSCAPI.Controllers
             return manager.GetUserWorkouts(userId);
         }
 
+        [HttpGet("Exercise/Workout")]
+        public List<Exercise>? GetExercisesByWorkout(int workoutId)
+        {
+            return manager.GetExercisesByWorkoutId(workoutId);
+        }
+
         [HttpGet("Workout/Name")]
         public Workout? GetWorkoutByName(string name, DateOnly date)
         {
