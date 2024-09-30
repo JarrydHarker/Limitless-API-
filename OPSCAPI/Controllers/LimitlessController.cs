@@ -240,7 +240,7 @@ namespace OPSCAPI.Controllers
             return manager.AddMovement(movement);
         }
 
-        [HttpPost("MealFoods")]
+        [HttpPost("MealFood")]
         public string AddMealFood(MealFood mealfood)
         {
             return manager.AddMealFood(mealfood);
