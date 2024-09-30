@@ -468,6 +468,27 @@ namespace OPSCAPI.Models
 
             return null;
         }
+
+        public Workout? GetWorkoutByName(string name, DateOnly date)
+        {
+            var workouts = context.TblWorkouts.Where(x => x.Name == name).ToList();
+
+            if (workouts.Count() > 1)
+            {
+                var workout = workouts.Where(x => x.Date == date).FirstOrDefault();
+
+                if(workout != null)
+                {
+                    return new Workout(workout);
+                }
+            }else
+            {
+                return new Workout(workouts[0]);
+            }
+
+            return null;
+        }
+
         public Ratios? GetRatios(string userID)
         {
             var ratio = context.TblRatios.Find(userID);

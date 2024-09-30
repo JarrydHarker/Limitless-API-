@@ -165,6 +165,12 @@ namespace OPSCAPI.Controllers
             return manager.GetUserWorkoutsByDate(userId, date);
         }
 
+        [HttpGet("Workout/Name")]
+        public Workout? GetWorkoutByName(string name, DateOnly date)
+        {
+            return manager.GetWorkoutByName(name, date);
+        }
+
         //GET Methods//
 
         //POST Methods//

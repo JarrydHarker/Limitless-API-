@@ -45,6 +45,7 @@ namespace OPSCAPI.Models
         public double StepGoal { get; set; }
 
         public UserInfo() { }
+
         public UserInfo(TblUserInfo userInfo)
         {
             UserId = userInfo.UserId;
