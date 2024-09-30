@@ -235,10 +235,6 @@ namespace OPSCAPI.Models
         public Meal() { }
         public int? MealId { get; set; } = null;
 
-        public DateOnly? Date { get; set; }
-
-        public string? UserId { get; set; }
-
         public string Name { get; set; } = null!;
 
         public Meal(TblMeal meal)
@@ -356,11 +352,13 @@ namespace OPSCAPI.Models
         {
             MealId = mealFood.MealId;
             FoodId = mealFood.FoodId;
+            UserId = mealFood.UserId;
+            Date = mealFood.Date;
         }
 
         public TblMealFood ConvertToEntity()
         {
-            return new TblMealFood { MealId = MealId, FoodId = FoodId };
+            return new TblMealFood { MealId = MealId, FoodId = FoodId, Date = Date, UserId = UserId };
         }
     }
 
