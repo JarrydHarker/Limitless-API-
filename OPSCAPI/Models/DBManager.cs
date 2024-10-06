@@ -602,10 +602,14 @@ namespace OPSCAPI.Models
         {
             try
             {
-                context.TblExercises.Add(exercise.ConvertToEntity());
+                var dbEntity = exercise.ConvertToEntity();
+
+                context.TblExercises.Add(dbEntity);
                 context.SaveChanges();
 
-                return "Success";
+                Console.WriteLine(dbEntity.ExerciseId);
+
+                return dbEntity.ExerciseId.ToString();
             } catch (Exception ex)
             {
                 return $"Error: {ex}";
