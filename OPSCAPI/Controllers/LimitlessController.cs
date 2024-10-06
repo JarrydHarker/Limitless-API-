@@ -123,6 +123,12 @@ namespace OPSCAPI.Controllers
             return await manager.GetAllFoods(pageNumber, pageSize);
         }
 
+        [HttpGet("Food/Meal")]
+        public List<Food>? GetFoodsByMeal(int mealId)
+        {
+            return manager.GetFoodsByMeal(mealId);
+        }
+
         [HttpGet("Food/Search")]
         public async Task<List<Food>> SearchForFoods(string strSearch)
         {

@@ -1094,6 +1094,24 @@ namespace OPSCAPI.Models
             return foods;
         }
 
+        public List<Food>? GetFoodsByMeal(int mealId)
+        {
+            var mealfoods = context.TblMealFoods.Where(x => x.MealId == mealId).ToList();
+            var foods = new List<Food>();
+
+            foreach (var mealfood in mealfoods)
+            {
+                var food = context.TblFoods.Where(x => x.FoodId == mealfood.FoodId).FirstOrDefault();
+
+                if (food != null)
+                {
+                    foods.Add(new Food(food));
+                }
+            }
+
+            return foods;
+        }
+
         public Food? GetFood(int foodId)
         {
             var food = context.TblFoods.Find(foodId);
@@ -1395,16 +1413,6 @@ namespace OPSCAPI.Models
                 if (name != null)
                 {
                     meal.Name = name;
-                }
-
-                if (date != null)
-                {
-                    meal.Date = date;
-                }
-
-                if (userId != null)
-                {
-                    meal.UserId = userId;
                 }
 
                 context.SaveChanges();
